@@ -20,7 +20,7 @@ class DBClass
 	function __construct()
 	{
 		$this->db  = 'foodcourt';
-		$this->usr = 'root';
+		$this->usr = 'ipipe';
 	    $this->pss = 'P1P3.CR00$';
 		$this->host = '127.0.0.1';
 	}
