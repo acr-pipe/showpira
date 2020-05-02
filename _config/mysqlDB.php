@@ -23,7 +23,7 @@ class DBClass
 	function __construct()
 	{
 		$this->encrypt = new _cy();
-		$this->db  = 'foodcourt';
+		$this->db  = 'foodshow';
 		$this->usr = 'ipipe';
 	    $this->pss = 'P1P3.CR00$';
 		$this->host = '127.0.0.1';
