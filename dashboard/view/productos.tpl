@@ -41,24 +41,30 @@
                   Borrar &nbsp;
                   <span data-feather="x"></span>
                 </button>
+                <button type="button" class="btn btn-light optn">
+                  Opciones &nbsp;
+                  <span data-feather="box"></span>
+                </button>
               </div>
             </div>
           </div>
-        <table class="table" id="data-table-productoss">
-          <thead>
-            <tr>
-              <th scope="col"></th>
-              <th scope="col"></th>
-              <th scope="col">Nombre</th>
-              <th scope="col">Descripción</th>s
-              <th scope="col">Precio</th>
-              <!-- <th scope="col"></th> -->
-            </tr>
-          </thead>
-          <tbody id="getProductos">
-            <!-- JS -->
-          </tbody>
-        </table>
+          <div class="table-responsive">
+            <table class="table" id="data-table-productoss">
+              <thead>
+                <tr>
+                  <th scope="col"></th>
+                  <th scope="col"></th>
+                  <th scope="col">Nombre</th>
+                  <th scope="col">Descripción</th>
+                  <th scope="col">Precio</th>
+                </tr>
+              </thead>
+              <tbody id="getProductos">
+                <!-- JS -->
+              </tbody>
+            </table>
+          </div>
+        
       </div>
 
       <div class="col-md-6 mb-3">
@@ -170,6 +176,132 @@
                 <source class="_video" src="" type="video/mp4">
                 <p>Video description</p>
               </video>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="modal_producto_detail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Opciones del producto</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body container">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-8 pipe-validator v-category">
+                    <label>Categoria</label>
+                    <div class="input-group mb-3">
+                      <input type="text" class="form-control pipe-validate" id="text_category" pipe-type="text" pipe-mssg="Categoria">
+                      <div class="input-group-append">
+                        <button type="button" class="btn btn-outline-primary" id="add_category">Agregar</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row ml-1 mt-2">
+                  <input type="hidden" id="hidden_category" value="">
+                  <ul class="list-group w-100" id="list_categories">
+                    <!-- <li class="list-group-item">
+                      Cras justo odio
+                      <span data-feather="x" class="der"></span>
+                    </li> -->
+                  </ul>
+                </div>    
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="form-group">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="multiple_option" disabled>
+                      <label class="form-check-label" for="multiple_option">
+                        Opción múltiple <small><span class="text-muted"> - Permite que el usuario seleccione varias opciones al mismo tiempo, de lo contrario se asignará una selección única de las opciones</span></small>
+                      </label>
+                    </div>
+                  </div>
+                </div>      
+                <div class="row v-subcategory">
+                  <div class="col-md-5">
+                    <label>Opcion</label>
+                    <input type="text" class="form-control pipe-validate" id="text_option" pipe-type="text" pipe-mssg="Opción" disabled>
+                  </div>
+                  <div class="col-md-5">
+                    <label>Valor</label>
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">₡</span>
+                      </div>
+                      <input type="text" class="form-control pipe-validate" id="text_value" pipe-type="text" pipe-mssg="Valor" disabled="">
+                      <div class="input-group-append">
+                        <button type="button" class="btn btn-outline-primary" id="add_subcategory" disabled>Agregar</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row ml-1 mt-2">
+                  <ul class="list-group w-100" id="list_subcategories">
+                    
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="row">
+              <div class="col-md-5 mb-3">
+                <label>Detalle</label>
+                <textarea type="text" class="form-control" id="vdetalle" placeholder="" value="" required=""></textarea>
+              </div>
+              <div class="col-md-5 mb-3">
+                <label>Valor</label>
+                  <input type="number" class="form-control" id="vvalor" placeholder="₡500" value="" required="">
+              </div>
+              <div class="col-md-2">
+                <button type="button" class="btn btn-light" id="addToDetail">
+                  Agregar &nbsp;
+                  <span data-feather="plus-circle"></span>
+                </button>
+              </div>
+            </div>
+            <hr>
+            <div class="row table-responsive px-2">
+              <table class="table" id="data-table-detalles">
+                <thead>
+                  <tr>
+                    <th scope="col">Detalle</th>
+                    <th scope="col">Valor</th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody id="getDetalles">
+                  <tr>' +
+                    '<td>' + detalle + '</td>' +
+                    '<td>' + valor + '</td>' +
+                    '<td style="width: 40% !important">' +
+                      '<div class="row form-check">' +
+                        '<input class="form-check-input formula" type="radio" name="formula" id="s' + detalleproducto[0][0][0] + '" value="1" checked>' +
+                        '<label class="form-check-label" for="s' + detalleproducto[0][0][0] + '">' +
+                          'Sumar al precio del producto' +
+                        '</label>' +
+                      '</div>' +
+                      '<div class="row form-check">' +
+                        '<input class="form-check-input formula" type="radio" name="formula" id="r' + detalleproducto[0][0][0] + '" value="2">' +
+                        '<label class="form-check-label" for="r' + detalleproducto[0][0][0] + '">' +
+                          'Restar al precio del producto' +
+                        '</label>' +
+                      '</div>' +
+                    '</td>' +
+                  '</tr>
+                </tbody>
+              </table>
+            </div> -->
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="save_categories">Agregar detalle</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
           </div>
         </div>
       </div>

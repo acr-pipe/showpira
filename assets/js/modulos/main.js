@@ -40,7 +40,6 @@ $(document).on("click",".asign",function(){
     $("#asignDelivery").attr('estado',estado);
     $("#asignDelivery").attr('accion',accion);
     $("#asignDelivery").attr('disabled',true);
-
     if (accion == 'enviar') {
         $("#aDeliver").modal('show');
     }else{

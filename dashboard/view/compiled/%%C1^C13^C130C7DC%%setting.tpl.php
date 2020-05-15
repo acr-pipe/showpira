@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.17, created on 2020-03-04 16:08:30
+<?php /* Smarty version 2.6.17, created on 2020-05-06 17:56:40
          compiled from setting.tpl */ ?>
 <!DOCTYPE html>
 <html lang="es">

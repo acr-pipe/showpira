@@ -2327,6 +2327,31 @@ function getCookie(cname) {
   return "";
 }
 
+function pipe_validator(keyword) {
+    var validated = false;
+    $(".v-" + keyword + " > .pipe-validate").each(function(index) {
+        var type = $(this).attr('pipe-type');
+        var mssg = $(this).attr('pipe-mssg');
+        switch(type) {
+            case 'text':
+                if ($(this).val() == '') {
+                    validated =  mssg + ' requerido'; }
+                break;
+            case 'check':
+                if ($("[pipe-type=check]:checked").length == 0) {
+                    validated = mssg + ' requerido'; }
+                break;
+            case 'html':
+                if ($(this).text() == '') {
+                    validated =  mssg + ' requerido'; }
+                break;
+            default:
+                break;
+        }
+    });
+    return validated;
+}
+
 // addgeneral
 
 // autocomplete

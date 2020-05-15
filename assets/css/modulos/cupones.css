@@ -1,3 +1,7 @@
+.contdpub {
+    display: none;
+}
+
 .imgprod {
   vertical-align: middle;
   width: 50px;
@@ -55,6 +59,11 @@
 
 #searchdata-table-productoss{
     display: none;
+}
+
+.dropzone .dz-preview .dz-image {
+    width: 200px !important;
+    height: 100px !important;
 }
 
 .dropzone .dz-preview .dz-details {

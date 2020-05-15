@@ -3,7 +3,7 @@ if (sizeof($transaccion) > 0) {
   foreach ($transaccion as $obj) {
     echo '<li id="li'.$obj[2].'" class="list-group-item d-flex justify-content-between align-items-center listprod">
           <div class="col-sm-7">
-            <img src="../assets/imgs/'.$obj[4].'" alt="Avatar" class="imgprod">
+            <img src="https://food.pipecr.com/assets/imgs/'.$obj[4].'" alt="Avatar" class="imgprod">
             <span class="ml-2">'.$obj[5].'</span>
           </div>
           <div class="input-group input-group-sm col-sm-4">

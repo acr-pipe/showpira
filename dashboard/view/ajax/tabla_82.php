@@ -9,9 +9,14 @@ if (sizeof($transaccion) > 0) {
 					if ($obj[8] == 1) {
 						echo '<span class="badge badge-success">Publicado</span><br>';
 					}
-					echo '<small><b>Disponible desde:</b> '.$obj[5].'</small>
-					<small><b>Disponible hasta:</b> '.$obj[6].'</small>
-					<small class="text-muted">'.$obj[2].' | ₡ '.$obj[3].'</small>
+					if ($obj[10] == 1) {
+						echo '<small style="display: block"><b>Desde:</b> '.$obj[5].'</small>
+						<small style="display: block"><b>Hasta:</b> '.$obj[6].'</small>';
+					} else {
+						echo '<small style="display: block"><b>Promo del día</b></small>';
+					}
+					
+					echo '<small style="display: block" class="text-muted">₡ '.$obj[3].'</small>
 					</section>';
 					if ($obj[8] != 1) {
 						echo '<button class="btn btn-primary btn-block btn-sm desactivateCupons" id="'.$obj[0].'">Desactivar</button>';
@@ -28,9 +33,5 @@ if (sizeof($transaccion) > 0) {
 	</div>
 <?php } 
 ?>
-<!-- <div class="card-header">
-	<div class="card-body p-1" style="background: #F8FBFB">
-		<small>'.$obj[2].' | ₡ '.$obj[3].'</small>
-	</div>
-</div> -->
+<!-- <small style="display: block" class="text-muted">'.$obj[2].' | ₡ '.$obj[3].'</small> -->
 

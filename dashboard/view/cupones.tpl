@@ -104,29 +104,178 @@
         <div class="col col-md-12 mt-4">
           <input type="hidden" id="hvidpub" value="">
           <label style="margin-top: -25px">Publicación <span class="text-muted">- Defina los parámetros dentro de los cuales va a ser visible la publicación, el formato de la hora debe ser en 24H</span></label>
-          <div class="input-group">
-            <div class="input-group-prepend">
-                <span class="input-group-text bg-light">
-                  Desde
-                </span>
+          
+          <div class="card">
+            <div class="card-header">
+              <div class="row">
+                <input type="hidden" id="hchkcupon" value="0">
+                <div class="col-sm-6">
+                <div class="form-check">
+                  <input class="form-check-input ml-2 optpulic" type="radio" name="optpulic" id="entrefechas" value="1">
+                  <label class="form-check-label ml-5" for="entrefechas">
+                    Entre fechas
+                  </label>
+                </div>
               </div>
-            <input type="date" id="fdesde" class="form-control">
-            <input type="time" id="tdesde" class="form-control">
-              <div class="input-group-append">
-                <span class="input-group-text bg-light">
-                  hasta
-                </span>
-              </div>
-              <input type="date" id="fhasta" class="form-control">
-              <input type="time" id="thasta" class="form-control">
-              <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type="button" id="cleanPub"><span data-feather="x"></span></button>
-                <!-- <span class="input-group-text bg-light">
-                  <span data-feather="x"></span>
-                </span> -->
-              </div>
+              <div class="col-sm-6">
+                <div class="form-check">
+                  <input class="form-check-input ml-2 optpulic" type="radio" name="optpulic" id="pordias" value="2">
+                  <label class="form-check-label ml-5" for="pordias">
+                    Por día
+                  </label>
+                </div>
+              </div>  
+            </div>
+            </div>
+            <div class="card-body p-1" id="bodypublic">
+              <section id="dentrefechas" class="contdpub">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text bg-light">
+                      Desde
+                    </span>
+                  </div>
+                  <input type="date" id="fdesde" class="form-control">
+                  <input type="time" id="tdesde" class="form-control">
+                  <div class="input-group-append">
+                    <span class="input-group-text bg-light">
+                      hasta
+                    </span>
+                  </div>
+                  <input type="date" id="fhasta" class="form-control">
+                  <input type="time" id="thasta" class="form-control">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" id="cleanPub"><span data-feather="x"></span></button>
+                    <!-- <span class="input-group-text bg-light">
+                      <span data-feather="x"></span>
+                    </span> -->
+                  </div>
+                </div>
+              </section>
+              <section id="dpordias" class="contdpub">
+                <div class="input-group">
+                  <div class="input-group-prepend" style="width: 100%">
+                    <div class="input-group-text">
+                      <input type="checkbox" class="week_chck daymon" data-toggle="toggle" id="chckmon" day="mon">
+                    </div>
+                    <label for="mon" class="input-group-text" style="width: 100%;">Lunes</label>
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" style="background: #fafafa">Desde</span>
+                    </div>
+                    <input type="time" class="form-control mon" id="mon_a" disabled>
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" style="background: #fafafa">Hasta</span>
+                    </div>
+                    <input type="time" class="form-control mon" id="mon_c" disabled>
+                  </div>
+                </div>
+
+                <div class="input-group mt-2">
+                  <div class="input-group-prepend" style="width: 100%">
+                    <div class="input-group-text">
+                      <input type="checkbox" class="week_chck daytue" data-toggle="toggle" id="chckmon" day="tue">
+                    </div>
+                    <label for="tue" class="input-group-text" style="width: 100%;">Martes</label>
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" style="background: #fafafa">Desde</span>
+                    </div>
+                    <input type="time" class="form-control tue" id="tue_a" disabled>
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" style="background: #fafafa">Hasta</span>
+                    </div>
+                    <input type="time" class="form-control tue" id="tue_c" disabled>
+                  </div>
+                </div>
+
+                <div class="input-group mt-2">
+                  <div class="input-group-prepend" style="width: 100%">
+                    <div class="input-group-text">
+                      <input type="checkbox" class="week_chck daywed" data-toggle="toggle" id="chckmon" day="wed">
+                    </div>
+                    <label for="wed" class="input-group-text" style="width: 100%;">Miercoles</label>
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" style="background: #fafafa">Desde</span>
+                    </div>
+                    <input type="time" class="form-control wed" id="wed_a" disabled>
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" style="background: #fafafa">Hasta</span>
+                    </div>
+                    <input type="time" class="form-control wed" id="wed_c" disabled>
+                  </div>
+                </div>
+
+                <div class="input-group mt-2">
+                  <div class="input-group-prepend" style="width: 100%">
+                    <div class="input-group-text">
+                      <input type="checkbox" class="week_chck daythu" data-toggle="toggle" id="chckmon" day="thu">
+                    </div>
+                    <label for="thu" class="input-group-text" style="width: 100%;">Jueves</label>
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" style="background: #fafafa">Desde</span>
+                    </div>
+                    <input type="time" class="form-control thu" id="thu_a" disabled>
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" style="background: #fafafa">Hasta</span>
+                    </div>
+                    <input type="time" class="form-control thu" id="thu_c" disabled>
+                  </div>
+                </div>
+
+                <div class="input-group mt-2">
+                  <div class="input-group-prepend" style="width: 100%">
+                    <div class="input-group-text">
+                      <input type="checkbox" class="week_chck dayfri" data-toggle="toggle" id="chckmon" day="fri">
+                    </div>
+                    <label for="fri" class="input-group-text" style="width: 100%;">Viernes</label>
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" style="background: #fafafa">Desde</span>
+                    </div>
+                    <input type="time" class="form-control fri" id="fri_a" disabled>
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" style="background: #fafafa">Hasta</span>
+                    </div>
+                    <input type="time" class="form-control fri" id="fri_c" disabled>
+                  </div>
+                </div>
+
+                <div class="input-group mt-2">
+                  <div class="input-group-prepend" style="width: 100%">
+                    <div class="input-group-text">
+                      <input type="checkbox" class="week_chck daysat" data-toggle="toggle" id="chckmon" day="sat">
+                    </div>
+                    <label for="sat" class="input-group-text" style="width: 100%;">Sabado</label>
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" style="background: #fafafa">Desde</span>
+                    </div>
+                    <input type="time" class="form-control sat" id="sat_a" disabled>
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" style="background: #fafafa">Hasta</span>
+                    </div>
+                    <input type="time" class="form-control sat" id="sat_c" disabled>
+                  </div>
+                </div>
+
+                <div class="input-group mt-2">
+                  <div class="input-group-prepend" style="width: 100%">
+                    <div class="input-group-text">
+                      <input type="checkbox" class="week_chck daysun" data-toggle="toggle" id="chckmon" day="sun">
+                    </div>
+                    <label for="sun" class="input-group-text" style="width: 100%;">Domingo</label>
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" style="background: #fafafa">Desde</span>
+                    </div>
+                    <input type="time" class="form-control sun" id="sun_a" disabled>
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" style="background: #fafafa">Hasta</span>
+                    </div>
+                    <input type="time" class="form-control sun" id="sun_c" disabled>
+                  </div>
+                </div>
+              </section>
+            </div>
           </div>
         </div>
+
         <div class="col-md-8 mt-4 d-inline">
           <div class="card">
             <div class="card-header">

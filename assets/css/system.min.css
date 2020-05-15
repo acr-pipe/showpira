@@ -13,10 +13,14 @@ div > .modal {
   margin-top: 0 !important;
 }
 
-.grandemodal {
+/*.grandemodal {
   width: 70%;
   min-height: 90%;
   height: 100%;
+}*/
+
+.modal-lg {
+    max-width: 80% !important;
 }
 
 @font-face {

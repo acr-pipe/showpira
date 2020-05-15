@@ -27,6 +27,7 @@ $(function(){
     });
 
 	loadCupones();
+	$("#entrefechas").click();
 
     var options = {
 		url: "../assets/json/productos.php",
@@ -77,6 +78,7 @@ $(document).on('click', '.sum', function() {
 		console.log(arr('login',4,'',83,'2,0,'+idcupo+','+idprod+','+cant,0,0,0));
 	}
 });
+
 $(document).on('click', '.rest', function() {
 	var idcupo = $("#hidcupo").val() == '' ? 0 : $("#hidcupo").val();
 	var idprod = $(this).attr('prod');
@@ -96,6 +98,16 @@ $(document).on('click', '.rest', function() {
 	}
 });
 
+$(document).on('click', '.optpulic', function() {
+	var id = $(this).attr('id');
+	if (id == 'entrefechas') {
+		$("#d"+id).show();
+		$("#dpordias").hide();
+	}else{
+		$("#d"+id).show();
+		$("#dentrefechas").hide();
+	}
+});
 // $(document).on('keyup', '#vsearchprod', function() {
 // 	var a = arr('login',4,'',29,'"","0,10",@@impresa',0,0,0)[0];
 // 	console.log('a',a);
@@ -125,15 +137,9 @@ $(document).on('click', '.desactivateCupons', function() {
 	loadCupones();
 });
 
-$(document).on('click', '.desactivateCupons', function() {
-	var idprod = $(this).attr('id');
-	var a = arr('login',4,'',98,idprod+',0',0,0,0);
-	console.log(a);
-	loadCupdesactivados();
-	loadCupones();
-});
-
 $(document).on('click', '.imgcupon', function() {
+	cleanCupo();
+	limpiaPubliCupon();
 	var id = $(this).attr('id').substr(1);
 	$("#e"+id).prop('checked', true);
 	$(".mod").attr('id',id);
@@ -157,7 +163,7 @@ $(document).on('click', '.rmimg', function() {
 $(document).on("click",".del",function(){
 	var vid = $(this).attr('id') == undefined ? 0 : $(this).attr('id');
 	if (vid != 0) {
-		var a = arr('login',4,'',11,'3,'+vid+',"","",0,0,0,0,"0000-00-00 00:00:00","0000-00-00 00:00:00",0,@@impresa',0,0,0);
+		var a = arr('login',4,'',11,'3,'+vid+',"","",0,0,0,0,"0000-00-00 00:00:00","0000-00-00 00:00:00",0,"",0,@@impresa',0,0,0);
 		console.log(a);
 		loadCupones();
 	}else{
@@ -166,12 +172,13 @@ $(document).on("click",".del",function(){
 });
 
 $(document).on("click",".mod",function() {
+	limpiaPubliCupon();
 	var vid = $(this).attr('id') == undefined ? 0 : $(this).attr('id');
 	if (vid != 0) {
 		var a = arr('login',4,'',86,vid,0,0,0)[0][0];
-		console.log(a);
+		// console.log(a);
 		var b = arr('login',4,'*',87,'idcupon = '+ vid +' and id > 0',0,0,0)[0];
-		console.log(b);
+		// console.log(b);
 		var str =  '<input type="hidden" name="idcupon">'+
 					'<div id="img'+b[0][0]+'" class="dz-preview dz-image-preview" align="center">'+
 						'<div class="dz-image">'+
@@ -180,6 +187,12 @@ $(document).on("click",".mod",function() {
 						'<a class="rmimg" style="color: red; cursor: pointer" id="i'+b[0][0]+'" href="#!" data-dz-remove="">Eliminar</a>'+
 					'</div>';
 		$("#img-upload").html(str);
+		
+		if (a[13] == 1) {
+			$("#entrefechas").click();
+		}else{
+			$("#pordias").click();
+		}
 
 		var hid_ = a[0];
 		var nom_ = a[1];
@@ -193,6 +206,29 @@ $(document).on("click",".mod",function() {
 		var fthasta = a[7];
 		var thasta = a[8];
 		var hvidpub = a[11];
+		
+		// console.log('a[12]',a[12]);
+		var dias = a[12].split(',');
+		if (dias.length > 0) {
+			for (var i = 0; i < dias.length; i++) {
+				// console.log('dias['+i+']',dias[i]);
+				var dia = dias[i].split('_')[0];
+				// console.log('dia',dia);
+				var horario = dias[i].split('_')[1];
+				// console.log('horario',horario);
+				var inicio = String(horario).split('-')[0];
+				// console.log('inicio',inicio);
+				var fin = String(horario).split('-')[1];
+				// console.log('fin',fin);
+				$("#"+dia+"_a").val(inicio);
+				$("#"+dia+"_c").val(fin);
+
+				$(".day"+dia).click();
+
+			}
+		}
+		console.log('dias',dias);
+		console.log('dias.length',dias.length);
 
 		$("#hidcupo").val(hid_);
 		$("#nom_cupo").val(nom_);
@@ -221,19 +257,58 @@ $(document).on("click",".mod",function() {
 
 });
 
+$(document).on('change', '.week_chck', function() {
+	var day = $(this).attr('day');
+	// console.log('day', day);
+	if ( $(this).prop('checked') == true ) {
+		$("."+day+"").attr('disabled', false);
+	}else{
+		$("."+day+"").attr('disabled', true);
+		$("."+day+"").val('');
+	}
+});
+
+$(document).on('click', '.optpulic', function() {
+	var opt = $(this).val();
+	$("#hchkcupon").val(opt);
+});
+
 $(document).on('click', '#addCupo', function() {
+	var dias = [];
+	var optpub = $("#hchkcupon").val();
+
 	var nom_ = $("#nom_cupo").val();
 	var des_ = $("#desc_cupo").val();
 	var pre_ = $("#prec_cupo").val();
 	var imp_ = $("#ivi_cupo").val() == '' ? 0 : $("#ivi_cupo").val();
-	var ftdesde = $("#fdesde").val()+" "+$("#tdesde").val()+':00';
-	var fthasta = $("#fhasta").val()+" "+$("#thasta").val()+':00';
+	var fdesde = $("#fdesde").val() == '' ? '0000-00-00' : $("#fdesde").val();
+	var fhasta = $("#fhasta").val() == '' ? '0000-00-00' : $("#fhasta").val();
+	var tdesde = $("#tdesde").val() == '' ? '00' : $("#tdesde").val();
+	var thasta = $("#thasta").val() == '' ? '00' : $("#thasta").val();
+	var ftdesde = fdesde + " " + tdesde + ':00';
+	var fthasta = fhasta + " " + thasta + ':00';
+
+	// mon +'/'+ $("#mon_a").val() +'-'+ $("#mon_c").val();
+	// tue +'/'+ $("#tue_a").val() +'-'+ $("#tue_c").val();
+	// wed +'/'+ $("#wed_a").val() +'-'+ $("#wed_c").val();
+	// thu +'/'+ $("#thu_a").val() +'-'+ $("#thu_c").val();
+	// fri +'/'+ $("#fri_a").val() +'-'+ $("#fri_c").val();
+	// sat +'/'+ $("#sat_a").val() +'-'+ $("#sat_c").val();
+	// sun +'/'+ $("#sun_a").val() +'-'+ $("#sun_c").val();
+	// HACER ESTO EN APP
+	$(".week_chck").each(function(index){
+		var dia = $(this).attr('day')
+		$(this).is(':checked') ? dias.push(dia+'_'+$("#"+dia+"_a").val()+'-'+$("#"+dia+"_c").val()) : 1;
+	});// CARGA SOLO LOS SELECCIONADOS
+	console.log(dias);
+
+	console.log('optpub', optpub);
 
 	var valAddCupo = validaAddCupo();
 	if (!valAddCupo) {
-		console.log('1,0,"'+nom_+'","'+des_+'",'+pre_+','+imp_+',0,-1,"'+ftdesde+'","'+fthasta+'",0,@@impresa');
+		console.log('1,0,"'+nom_+'","'+des_+'",'+pre_+','+imp_+',0,0,"'+ftdesde+'","'+fthasta+'",0,'+dias+',@@impresa');
 		// CAMBIAR TODO CUPONES A PRODUCTO
-		var a = arr('login',4,'',11,'1,0,"'+nom_+'","'+des_+'",'+pre_+','+imp_+',0,0,"'+ftdesde+'","'+fthasta+'",0,@@impresa',0,0,0);
+		var a = arr('login',4,'',11,'1,0,"'+nom_+'","'+des_+'",'+pre_+','+imp_+',0,0,"'+ftdesde+'","'+fthasta+'",0,"'+dias+'",'+optpub+',@@impresa',0,0,0);
 		console.log('insert 11:', a);
 		if (a['succed']) {
 			$(".listprod").each( function() {
@@ -274,6 +349,9 @@ $(document).on('click', '#addCupo', function() {
 });
 
 $(document).on('click', '#editCupo', function() {
+	var dias = [];
+	var optpub = $("#hchkcupon").val();
+
 	var vid = $("#hidcupo").val();
 	var nom_ = $("#nom_cupo").val();
 	var des_ = $("#desc_cupo").val();
@@ -283,6 +361,12 @@ $(document).on('click', '#editCupo', function() {
 	var fthasta = $("#fhasta").val()+" "+$("#thasta").val()+':00';
 	var estado = 0;
 	var hvidpub = $("#hvidpub").val() == '' ? 0 : $("#hvidpub").val();
+
+	$(".week_chck").each(function(index){
+		var dia = $(this).attr('day')
+		$(this).is(':checked') ? dias.push(dia+'_'+$("#"+dia+"_a").val()+'-'+$("#"+dia+"_c").val()) : 1;
+	});// CARGA SOLO LOS SELECCIONADOS
+	console.log(dias);
 	console.log('hvidpub', hvidpub);
 	var valAddCupo = validaAddCupo();
 	if (!valAddCupo) {
@@ -293,7 +377,7 @@ $(document).on('click', '#editCupo', function() {
 			notification('No se subió la imagen!', 'danger', 3500);
 		}
 		console.log('2,'+vid+',"'+nom_+'","'+des_+'",'+pre_+','+imp_+',0,'+hvidpub+',"'+ftdesde+'","'+fthasta+'",0,@@impresa');
-		var a = arr('login',4,'',11,'2,'+vid+',"'+nom_+'","'+des_+'",'+pre_+','+imp_+',0,'+hvidpub+',"'+ftdesde+'","'+fthasta+'",0,@@impresa',0,0,0);
+		var a = arr('login',4,'',11,'2,'+vid+',"'+nom_+'","'+des_+'",'+pre_+','+imp_+',0,'+hvidpub+',"'+ftdesde+'","'+fthasta+'",1,"'+dias+'",'+optpub+',@@impresa',0,0,0);
 		console.log(a);
 		if (a['succed']) {
 		    
@@ -443,6 +527,25 @@ function cleanCupo() {
 	$(".mod").attr('id',0);
 	$(".del").attr('id',0);
 	$("#listprod").html('<div class="col-12 text-center p-2 mjsempty">No hay datos disponibles</div>');
+	$("#entrefechas").click();
+}
+
+function limpiaPubliCupon() {
+	$(".week_chck").prop('checked', false);
+	$(".mon").val('');
+	$(".mon").prop('disabled', true);
+	$(".tue").val('');
+	$(".tue").prop('disabled', true);
+	$(".wed").val('');
+	$(".wed").prop('disabled', true);
+	$(".thu").val('');
+	$(".thu").prop('disabled', true);
+	$(".fri").val('');
+	$(".fri").prop('disabled', true);
+	$(".sat").val('');
+	$(".sat").prop('disabled', true);
+	$(".sun").val('');
+	$(".sun").prop('disabled', true);
 }
 
 function loadCupones() {
@@ -451,7 +554,7 @@ function loadCupones() {
 }
 
 function loadCupdesactivados() {
-	var a = arr('login',6,'',97,'@@impresa',0,1,$("#cont-cupondesactivado"));
+	var a = arr('login',6,'',97,'0,@@impresa',0,1,$("#cont-cupondesactivado"));
 	console.log(a);
 }
 

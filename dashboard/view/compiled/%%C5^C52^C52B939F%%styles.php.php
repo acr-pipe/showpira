@@ -1,6 +1,7 @@
-<?php /* Smarty version 2.6.17, created on 2020-03-23 22:49:05
+<?php /* Smarty version 2.6.17, created on 2020-05-11 16:24:15
          compiled from ../view/styles.php */ ?>
 <link rel="icon" type="image/png" href="../assets/img/favicon.ico">
+<link rel="stylesheet" type="text/css" href="../assets/css/system.min.css">
 <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="../assets/css/modulos/menu.css">
 <link rel="stylesheet" type="text/css" href="../assets/libs/DataTables/media/css/jquery.dataTables.css">

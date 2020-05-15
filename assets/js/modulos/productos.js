@@ -51,8 +51,6 @@ $(function(){
     }
 });
 
-console.log();
-console.log();
 
 $(document).ready(function() {
 	var a = arr('login',4,'*',62,'id > 0 and idsucursal = @@impresa',0,0,0)[0];
@@ -65,6 +63,232 @@ $(document).ready(function() {
 
 	$("#tipo_prod").html(categorias);
 });
+
+// Opciones productos
+var detail = [];
+$(document).on('click','.optn', function() {
+	var id = $(this).attr('id').substr(1);
+	$("#hidprod").val(id);
+	$('#modal_producto_detail').modal('show');
+	$("#text_category").attr('disabled', false);
+	$("#add_category").attr('disabled', false);
+	$("#multiple_option").prop('checked', false);
+	$("#multiple_option").attr('disabled', true);
+	$("#text_option").val('').attr('disabled', true);
+	$("#text_value").val('').attr('disabled', true);
+	$("#add_subcategory").attr('disabled', true);
+	$("#list_categories").html('');
+	$("#list_subcategories").html('');
+	$("#hidden_category").val('');
+	setTimeout(function() {
+		$("#text_category").focus();
+	}, 500);
+});
+
+$(document).on('click', '#add_category', function() {
+	var category = $("#text_category").val();
+	var validation = pipe_validator('category');
+	var formated_category = category.replace(' ', '_');
+	console.log(validation);
+	if (!validation) {
+		// hidden category
+		$("#hidden_category").val(category);
+		// insert category to #list_categories
+		$("#list_categories").append('<li class="list-group-item" id="list_' + formated_category + '">' +
+          	category +
+          	'<span data-feather="x-circle" class="der delsub text-danger pointer delete_category" id="delete_' + formated_category + '" style="font-size: 1px"></span>' +
+        '</li>');
+		$("#text_category").val('');
+		$(this).attr('disabled', true);
+		$("#text_category").attr('disabled', true);
+		// enabling list_subcategories
+		$("#multiple_option").attr('disabled', false);
+		$("#text_option").attr('disabled', false);
+		$("#text_value").attr('disabled', false);
+		$("#add_subcategory").attr('disabled', false);
+		$("#text_option").focus();
+	}else{
+		console.log(validation);
+	}
+});
+
+$(document).on('click', '.delete_category', function() {
+	var id = $(this).attr('id').substr(7);
+	$("#list_" + id).remove();
+	$("#multiple_option").prop('checked', false).attr('disabled', true);
+	$("#text_option").val('').attr('disabled', true);
+	$("#text_value").val('').attr('disabled', true);
+	$("#add_subcategory").attr('disabled', true);
+	$("#text_category").attr('disabled', false).focus();
+	$("#add_category").attr('disabled', false);
+	$("#hidden_category").val('');
+	$("#list_subcategories").html('');
+});
+
+$(document).on('click', '#add_subcategory', function() {
+	var multiple = $("#multiple_option").is(':checked');
+	var option = $("#text_option").val();
+	var value = $("#text_value").val();
+	var category = $("#hidden_category").val();
+	var validation = pipe_validator('subcategory');
+	var formated_option = option.replace(' ', '_');
+	console.log(validation);
+	if (!validation) {
+		if (multiple) {
+			$("#list_subcategories").append('<li class="list-group-item pb-0 category'+category+'">' +
+				'<div class="row container">' +
+					'<div class="col-1">' +
+						'<div class="form-group">' +
+							'<input class="form-check-input" type="checkbox" id="check_'+formated_option+'">' +
+							'<label class="form-check-label"></label>' +
+						'</div>' +
+					'</div>' +
+					'<div class="col-5">' +
+						'<label class="name_subcategory">' + option + '</label>' +
+					'</div>' +
+					'<div class="col-5">' +
+						'<label class="value_subcategory">₡ ' + value + '</label>' +
+					'</div>' +
+					'<div class="col-1">' +
+						'<span data-feather="x-circle" id="deletesub_' + formated_option + '" class="der delsub text-danger pointer delete_subcategory" style="font-size: 1px"></span>' +
+					'</div>' +
+				'</div>' +
+			'</li>');
+		} else {
+			$("#list_subcategories").append('<li class="list-group-item pb-0 category'+category+'" id="subcategory_' + formated_option + '">' +
+				'<div class="row container">' +
+					'<div class="col-1">' +
+						'<div class="form-group">' +
+							'<input class="form-check-input" type="radio" name="radio_subcategories" id="check_'+formated_option+'">' +
+							'<label class="form-check-label"></label>' +
+						'</div>' +
+					'</div>' +
+					'<div class="col-5">' +
+						'<label class="name_subcategory">' + option + '</label>' +
+					'</div>' +
+					'<div class="col-5">' +
+						'<label class="value_subcategory" id="value_' + formated_option + '">₡ ' + value + '</label>' +
+					'</div>' +
+					'<div class="col-1">' +
+						'<span data-feather="x-circle" id="deletesub_' + formated_option + '" class="der delsub text-danger pointer delete_subcategory" style="font-size: 1px"></span>' +
+					'</div>' +
+				'</div>' +
+			'</li>');
+		}
+		feather.replace();
+		// insert to array detail
+		detail.push(option+','+value);
+		// clear fields
+		$("#text_option").val('');
+		$("#text_value").val('');
+		$("#text_option").focus();
+	}
+});
+
+$(document).on('click', '.delete_subcategory', function() {
+	var id = $(this).attr('id').substr(10);
+	var value = $("#value_" + id).text();
+	var arr = id.replace('_', ' ') + ',' + value;
+	console.log(id, value, arr);
+	// pop from array
+	// remove list
+	var i = detail.indexOf(arr);
+	console.log(i);
+	detail.splice(i, 1);
+	console.log(detail);
+	$("#subcategory_" + id).remove();
+});
+
+$(document).on('click', '#save_categories', function() {
+	console.log('save categories');
+	var idproducto = $("#hidprod").val();
+	var category = $("#hidden_category").val();
+	console.log(idproducto,category);
+	var db_category = arr('login',4,'',103,'1,0,'+idproducto+',"'+category+'"',0,0,0);
+	console.log(db_category)
+	if (db_category['succed']) {
+		console.log(detail)
+		for (var i = 0; i < detail.length; i++) {
+			var option = detail[i].split(',')[0];
+			var value = detail[i].split(',')[1];
+			var multiple = $("#multiple_option").is(':checked') ? 1 : 0;
+			console.log('checking option', option)
+			var isChecked = $("#check_"+option.replace(' ','_')).is(':checked') ? 1 : 0;
+			console.log(option,value,multiple,isChecked);
+			var db_subcategory = arr('login',4,'',101,'1,0,'+db_category[0][0][0]+',"'+option+'",'+value+','+multiple+','+isChecked,0,0,0);
+			console.log(db_subcategory);
+			if (db_subcategory['succed']) {
+				console.log('success');
+			}
+		}
+		detail = [];
+		$("#text_category").attr('disabled', false);
+		$("#add_category").attr('disabled', false);
+		$("#list_categories").html('');
+		$("#multiple_option").attr('checked', false);
+		$("#list_subcategories").html('');
+		$("#hidden_category").val(0);
+		$("#text_category").focus();
+		$("#multiple_option").attr('disabled',true);
+		$("#text_option").attr('disabled',true);
+		$("#text_value").attr('disabled',true);
+		$("#add_subcategory").attr('disabled',true);
+	}else{
+		console.log(db_category[0]['ERROR']);
+	}
+});
+
+// $(document).on('click', '#addToDetail', function() {
+// 	var detalle = $("#vdetalle").val();
+// 	var valor = $("#vvalor").val();
+// 	var vid = 1;
+// 	// var formula = $("[name=]")
+// 	var tabla = $("#data-table-detalles").DataTable();
+// 	// agrega a base de datos
+// 	var detalleproducto = arr('login',4,'',101,'1,0,' + vid + ',"' + detalle + '",' + valor + ',0');
+// 	console.log(detalleproducto);
+// 	if (detalleproducto['succed']) {
+// 		// agrega a la table detalles
+// 		tabla.destroy();
+// 		if (detalle != '' && valor != '') {
+// 			$("#getDetalles").append('<tr>' +
+// 				'<td>' + detalle + '</td>' +
+// 				'<td>' + valor + '</td>' +
+// 				'<td style="width: 40% !important">' +
+// 					'<div class="row form-check">' +
+// 						'<input class="form-check-input formula" type="radio" name="formula" id="s' + detalleproducto[0][0][0] + '" value="1" checked>' +
+// 						'<label class="form-check-label" for="s' + detalleproducto[0][0][0] + '">' +
+// 							'Sumar al precio del producto' +
+// 						'</label>' +
+// 					'</div>' +
+// 					'<div class="row form-check">' +
+// 						'<input class="form-check-input formula" type="radio" name="formula" id="r' + detalleproducto[0][0][0] + '" value="2">' +
+// 						'<label class="form-check-label" for="r' + detalleproducto[0][0][0] + '">' +
+// 							'Restar al precio del producto' +
+// 						'</label>' +
+// 					'</div>' +
+// 				'</td>' +
+// 			'</tr>');
+// 			$("#data-table-detalles").DataTable();
+// 			$("#vdetalle").val('');
+// 			$("#vvalor").val('');
+// 		}	
+// 	} else {
+// 		console.log(detalleproducto[0]['ERROR']);
+// 	}
+// });
+
+// $(document).on('change', '[name=formula]', function() {
+// 	var id = $(this).attr('id').substr(1);
+// 	var formula = $(this).val();
+// 	var actdetalle = arr('login',4,'',101,'2,' + id + ',0,"",0,' + formula);
+// 	console.log(actdetalle);
+// 	if (actdetalle['succed']) {
+// 		console.log('succed')
+// 	} else {
+// 		console.log(actdetalle[0]['ERROR']);
+// 	}
+// });
 
 $(document).on('change', '#tipo_prod', function() {
 
@@ -167,8 +391,9 @@ $(document).on("keyup","#vsearch",function(){
 
 $(document).on("click",".rdItem",function(){
 	var id = $(this).attr('id').substr(1);
-	$(".mod").attr('id',id);
-	$(".del").attr('id',id);
+	$(".mod").attr('id','m'+id);
+	$(".del").attr('id','d'+id);
+	$(".optn").attr('id','o'+id);
 });
 
 $(document).on('click', '.rmimg', function() {
@@ -194,7 +419,7 @@ $(document).on('click', '.rmimg', function() {
 // });
 
 $(document).on("click",".mod",function(){
-	var id = $(this).attr('id') == undefined ? 0 : $(this).attr('id');
+	var id = $(this).attr('id') == undefined ? 0 : $(this).attr('id').substr(1);
 	if (id != 0) {
 		var a = arr('login',4,'*',1,'id = '+id,0,0,0)[0];
 		console.log(a);
@@ -265,7 +490,6 @@ $(document).on("click","#cleanProd",function(){
 });
 
 $(document).on("click","#editProd",function(){
-
 	var vid = $("#hidprod").val();
 	var nom_ = $("#nom_prod").val();
 	var des_ = $("#desc_prod").val();
@@ -283,7 +507,7 @@ $(document).on("click","#editProd",function(){
 			// arr('login',7,1,133,'','null,\"../assets/imgupload/cars/car.png\",'+vid,0,0);
 			notification('No se subió la imagen!', 'danger', 3500);
 		}
-		var a = arr('login',4,'',11,'2,'+vid+',"'+nom_+'","'+des_+'",'+pre_+','+ivi_+','+tip_+','+cat_+',"0000-00-00 00:00:00","0000-00-00 00:00:00",0,@@impresa',0,0,0);
+		var a = arr('login',4,'',11,'2,'+vid+',"'+nom_+'","'+des_+'",'+pre_+','+ivi_+','+tip_+','+cat_+',"0000-00-00 00:00:00","0000-00-00 00:00:00",0,"",0,@@impresa',0,0,0);
 		console.log(a);
 
 		$("#editProd").text('Agregar');
@@ -318,9 +542,9 @@ $('.btn-file :file').on('fileselect', function(event, label) {
 });
 
 $(document).on("click",".del",function(){
-	var id = $(this).attr('id') == undefined ? 0 : $(this).attr('id');
+	var id = $(this).attr('id') == undefined ? 0 : $(this).attr('id').substr(1);
 	if (id != 0) {
-		var a = arr('login',4,'',11,'3,'+vid+',"","",0,0,0,0,"0000-00-00 00:00:00","0000-00-00 00:00:00",0,@@impresa',0,0,0);
+		var a = arr('login',4,'',11,'3,'+vid+',"","",0,0,0,0,"0000-00-00 00:00:00","0000-00-00 00:00:00",0,"",0,@@impresa',0,0,0);
 		console.log(a);
 		var p = arr('login',6,'',29,'"","0,10", @@impresa',0,1,$("#getProductos"));
 	    console.log(p);
@@ -340,7 +564,7 @@ $(document).on("click","#addProd",function(){
 	var valAddProd = validaAddProd();
 	if (!valAddProd) {
 		console.log('1,0,"'+nom_+'","'+des_+'",'+pre_+','+imp_+','+tip_+','+cat_+',"0000-00-00 00:00:00","0000-00-00 00:00:00",0,@@impresa');
-		var a = arr('login',4,'',11,'1,0,"'+nom_+'","'+des_+'",'+pre_+','+imp_+','+tip_+','+cat_+',"0000-00-00 00:00:00","0000-00-00 00:00:00",0,@@impresa',0,0,0);
+		var a = arr('login',4,'',11,'1,0,"'+nom_+'","'+des_+'",'+pre_+','+imp_+','+tip_+','+cat_+',"0000-00-00 00:00:00","0000-00-00 00:00:00",0,"",0,@@impresa',0,0,0);
 		if (a['succed']) {
 			console.log('SI IMG');
 			console.log('IMG',$(".dz-preview").length);

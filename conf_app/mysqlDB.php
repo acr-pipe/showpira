@@ -19,9 +19,9 @@ class DBClass
 
 	function __construct()
 	{
-		$this->db  = 'foodshow';
+		$this->db  = 'foodcourt';
 		$this->usr = 'ipipe';
-	    $this->pss = 'P1P3.CR00$';
+	   	$this->pss = 'P1P3.CR00$';
 		$this->host = '127.0.0.1';
 	}
 
