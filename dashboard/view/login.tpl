@@ -18,7 +18,7 @@
     <div class="jumbotron col-sm-5">
       <div class="row" align="center">
             <div class="col-sm-12">
-                <img src="../assets/img/signin.svg" width="60%">
+                <img src="../assets/img/signin.png" width="60%">
             </div>
         </div>
       <br>
@@ -55,7 +55,7 @@
                 <button id="loging" type="submit" class="btn btn-primary btn-block">Ingresar</button>
             </div>
             <div class="col-sm-12" align="right">
-                <small><a href="#" class="text-muted">Recuperar contraseña</a></small>
+                <small><a href="#" class="text-muted"> Recuperar contraseña</a></small>
             </div>
         </div>
         </form>
