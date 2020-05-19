@@ -84,8 +84,14 @@
         $smarty  = new mySmarty();
         $smarty->setModule('dashboard');
         $pg = $smarty->fetch('../view/menu.php');
+        $sty = $smarty->fetch('../view/styles.php');
+        $scr = $smarty->fetch('../view/scripts.php');  
         
+        $smarty->assign('NAV',$pg);
+        $smarty->assign('STY',$sty);
+        $smarty->assign('SCR',$scr);
         $smarty->display('login.tpl');
+      
 
        }
     }

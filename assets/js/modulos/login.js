@@ -1,6 +1,5 @@
 var crr = '';
 var conteo = 1;
-
 $(document).ready(function(){
 
  $(".modal").modal();
@@ -82,8 +81,21 @@ $(document).on("click","#sendrecupss",function(){
     var bdy = p[0][0][0];
     
     enviarCorreo(1,crr,'Petición de Cambio de Contraseña',bdy,0,0,0);
-
 });
+
+
+$(document).on('mouseover', '#verpass', function() {
+    $(".verpass").attr('data-feather', 'eye');
+    $(".passs").attr('type', 'text');
+    feather.replace();
+});
+
+$(document).on('mouseout', '#verpass', function() {
+    $(".verpass").attr('data-feather', 'eye-off');
+    $(".passs").attr('type', 'password');
+    feather.replace();
+});
+
 
 // $(document).on("click", "#loging", function() {
 //     getIn();

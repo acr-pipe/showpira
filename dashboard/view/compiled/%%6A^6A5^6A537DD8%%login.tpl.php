@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.17, created on 2020-05-18 19:17:46
+<?php /* Smarty version 2.6.17, created on 2020-05-19 16:26:44
          compiled from login.tpl */ ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -39,7 +39,9 @@
               <label for="pass">Contraseña</label>
               <div class="input-group mb-2 mr-sm-2">
                 <div class="input-group-prepend">
-                  <div class="input-group-text" id="verpass"></div>
+                  <div class="input-group-text" id="verpass">
+                    <span class="verpass" data-feather="eye-off"></span>
+                  </div>
                 </div>
                 <input type="password" class="form-control passs" id="pass" name="pss" aria-describedby="passlHelp" placeholder="Contraseña" autocomplete="new-password" value="">
               </div>
@@ -63,6 +65,8 @@
         </form>
     </div>
 </div>
+<?php echo $this->_tpl_vars['SCR']; ?>
+
 <script src="../assets/js/jquery.js"></script>
 <script src="../assets/js/bootstrap/bootstrap.min.js"></script>
 <script src="../assets/js/asgard.js"></script>

@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.17, created on 2020-02-28 18:30:45
+<?php /* Smarty version 2.6.17, created on 2020-05-18 19:33:27
          compiled from ../view/menu.php */ ?>
 <!-- <nav class="navbar navbar-primary fixed-top bg-primary flex-md-nowrap p-0 shadow">
   <a class="navbar-brand col-sm-3 col-md-2 mr-0 text-white" href="#">App <i>food_court</i></a>

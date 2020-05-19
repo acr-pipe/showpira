@@ -37,7 +37,9 @@
               <label for="pass">Contraseña</label>
               <div class="input-group mb-2 mr-sm-2">
                 <div class="input-group-prepend">
-                  <div class="input-group-text" id="verpass"></div>
+                  <div class="input-group-text" id="verpass">
+                    <span class="verpass" data-feather="eye-off"></span>
+                  </div>
                 </div>
                 <input type="password" class="form-control passs" id="pass" name="pss" aria-describedby="passlHelp" placeholder="Contraseña" autocomplete="new-password" value="">
               </div>
@@ -61,6 +63,7 @@
         </form>
     </div>
 </div>
+{$SCR}
 <script src="../assets/js/jquery.js"></script>
 <script src="../assets/js/bootstrap/bootstrap.min.js"></script>
 <script src="../assets/js/asgard.js"></script>
