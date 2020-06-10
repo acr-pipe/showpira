@@ -14,7 +14,7 @@
                 $temp = $_FILES['file']['tmp_name'][$i];
                 $dir_separator = DIRECTORY_SEPARATOR;
                 $folder = 'assets/imgs/productos';
-                $bname = 'https://food.pipecr.com/assets/imgs/productos/';
+                $bname = 'https://pira.pipecr.com/assets/imgs/productos/';
 
                 $destination_path = dirname(__FILE__).$dir_separator.$folder.$dir_separator;
 
@@ -40,7 +40,7 @@
                 $temp = $_FILES['file']['tmp_name'][$i];
                 $dir_separator = DIRECTORY_SEPARATOR;
                 $folder = 'assets/imgs/cupons';
-                $bname = 'https://food.pipecr.com/assets/imgs/cupons/';
+                $bname = 'https://pira.pipecr.com/assets/imgs/cupons/';
 
                 $destination_path = dirname(__FILE__).$dir_separator.$folder.$dir_separator;
 
@@ -66,7 +66,7 @@
                 $temp = $_FILES['file']['tmp_name'][$i];
                 $dir_separator = DIRECTORY_SEPARATOR;
                 $folder = 'assets/imgs/categorias';
-                $bname = 'https://food.pipecr.com/assets/imgs/categorias/';
+                $bname = 'https://pira.pipecr.com/assets/imgs/categorias/';
 
                 $destination_path = dirname(__FILE__).$dir_separator.$folder.$dir_separator;
 
