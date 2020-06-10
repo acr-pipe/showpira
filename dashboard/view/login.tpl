@@ -18,7 +18,7 @@
     <div class="jumbotron col-sm-5">
       <div class="row" align="center">
             <div class="col-sm-12">
-                <img src="../assets/img/signin.svg" width="60%">
+                <img src="../assets/img/bglogopira.png" width="60%">
             </div>
         </div>
       <br>
