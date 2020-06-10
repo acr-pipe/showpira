@@ -41,7 +41,7 @@
                   Borrar &nbsp;
                   <span data-feather="x"></span>
                 </button>
-                <button type="button" class="btn btn-light optn">
+                <button type="button" class="btn btn-light optn" style="display: none">
                   Opciones &nbsp;
                   <span data-feather="box"></span>
                 </button>
@@ -98,7 +98,7 @@
             <input type="text" class="form-control" id="prec_prod">
           </div>
         </div>
-        <div class="col-md-6 mb-3">
+        <div class="col-md-6 mb-3" style="display: none">
           <label for="ivi_prod">I.V.I</label>
           <div class="input-group mb-3">
             <div class="input-group-prepend">
@@ -114,7 +114,7 @@
           <label for="ivi_prod"></label>
           <input type="number" class="form-control" id="ivi_prod" placeholder="13%" value="" required=""> -->
         </div>
-        <div class="col-md-6 mb-3">
+        <div class="col-md-6 mb-3" style="display: none">
           <label for="imv_prod">Impuesto</label>
           <div class="input-group">
             <div class="input-group-prepend">
@@ -123,7 +123,7 @@
             <input type="text" class="form-control" id="imv_prod">
           </div>
         </div>
-        <div class="col-md-6 mb-3">
+        <div class="col-md-6 mb-3" style="display: none">
           <label for="tot_prod">Total</label>
           <div class="input-group">
             <div class="input-group-prepend">
@@ -206,6 +206,7 @@
                 </div>
                 <div class="row ml-1 mt-2">
                   <input type="hidden" id="hidden_category" value="">
+                  <input type="hidden" id="hidden_price" value="">
                   <ul class="list-group w-100" id="list_categories">
                     <!-- <li class="list-group-item">
                       Cras justo odio
@@ -224,15 +225,21 @@
                       </label>
                     </div>
                   </div>
-                </div>      
+                </div>
+                <div class="row der">
+                  ₡&nbsp;<p id="product_price"></p>
+                </div><br>
+                <div class="row der">
+                  <p style="color: #10dc60">+₡&nbsp;<span id="total_price" style="color: #10dc60">0</span></p>
+                </div>
                 <div class="row v-subcategory">
                   <div class="col-md-5">
                     <label>Opcion</label>
                     <input type="text" class="form-control pipe-validate" id="text_option" pipe-type="text" pipe-mssg="Opción" disabled>
                   </div>
-                  <div class="col-md-5">
+                  <div class="col-md-6">
                     <label>Valor</label>
-                    <div class="input-group mb-3">
+                    <div class="input-group mb-5">
                       <div class="input-group-prepend">
                         <span class="input-group-text">₡</span>
                       </div>

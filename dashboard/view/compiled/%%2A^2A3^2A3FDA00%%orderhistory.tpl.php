@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.17, created on 2020-02-03 16:35:59
+<?php /* Smarty version 2.6.17, created on 2020-05-26 19:44:53
          compiled from orderhistory.tpl */ ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -79,7 +79,7 @@
     <table class="table table-hover" data-sort="table">
       <thead>
         <tr>
-          <th><input type="checkbox" class="bsn" id="selectAll"></th>
+          <!-- <th><input type="checkbox" class="bsn" id="selectAll"></th> -->
           <th>Orden</th>
           <th>Nombre de cliente</th>
           <th>Fecha</th>

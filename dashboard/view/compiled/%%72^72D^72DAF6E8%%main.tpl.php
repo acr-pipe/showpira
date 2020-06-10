@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.17, created on 2020-05-19 16:27:47
+<?php /* Smarty version 2.6.17, created on 2020-05-21 18:05:20
          compiled from main.tpl */ ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -34,7 +34,7 @@
       <div class="my-3 p-3 bg-white rounded shadow-sm">
         <h6 class="border-bottom border-gray pb-2 mb-0">Por orden de llegada</h6>
           <div class="media text-muted pt-3">
-            <section id="ordenLlegada">
+            <section id="ordenLlegada" style="height: 350px; max-height: 350px; min-height: 350px; overflow: scroll;">
             <!-- JS -->
             </section>
         </div>
@@ -47,24 +47,24 @@
       <div class="my-3 p-3 bg-white rounded shadow-sm col-sm-6">
         <h6 class="border-bottom border-gray pb-2 mb-0">Ordenes en camino</h6>
         <div class="media text-muted pt-3">
-          <section id="ordenEnviada">
+          <section id="ordenEnviada" style="height: 350px; max-height: 350px; min-height: 350px; overflow: scroll;">
           <!-- JS -->
           </section>
         </div>
         <small class="d-block text-right mt-3">
-          <a href="#">Ver todas</a>
+          <a href="allordenes">Ver todas</a>
         </small>
       </div>
 
       <div class="my-3 p-3 bg-white rounded shadow-sm col-sm-6">
         <h6 class="border-bottom border-gray pb-2 mb-0">Ordenes finalizadas</h6>
         <div class="media text-muted pt-3">
-          <section id="ordenCompleta">
+          <section id="ordenCompleta" style="height: 350px; max-height: 350px; min-height: 350px; overflow: scroll;">
           <!-- JS -->
           </section>
         </div>
         <small class="d-block text-right mt-3">
-          <a href="#">Ver todas</a>
+          <a href="orderhistory">Ver todas</a>
         </small>
       </div>
       </div>

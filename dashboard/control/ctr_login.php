@@ -91,8 +91,6 @@
         $smarty->assign('STY',$sty);
         $smarty->assign('SCR',$scr);
         $smarty->display('login.tpl');
-      
-
        }
     }
    }else{

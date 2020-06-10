@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.17, created on 2020-05-06 17:56:40
+<?php /* Smarty version 2.6.17, created on 2020-06-05 17:24:36
          compiled from setting.tpl */ ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -19,7 +19,7 @@
 
 	<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
 
-    <div class="row">
+    <div class="row" style="display: none">
       <div class="col-sm-6">
         <div class="card">
           <h6 class="card-header">Tipo de Negocio <small><span class="text-muted"> - El tipo de negocio define la configuración de la vista de la aplicación</span></small></h6>
@@ -64,6 +64,7 @@
     <br>
     <div class="card-body p-2" style="background: #f8f8f8; border: none">
     <div class="row">
+      <input type="hidden" id="hidcatego" value="">
       <div class="col">
         <div class="card">
           <h6 class="card-header" data-toggle="collapse" href="#collapsecategorias" role="button" aria-expanded="true" aria-controls="collapsecategorias">Categorías <small><span class="text-muted"> - Categorías de productos</span></small></h6>
@@ -72,7 +73,7 @@
             <div class="input-group mb-3">
               <input type="text" class="form-control" placeholder="Categoría" aria-label="Categoría" id="nom_addtipo" aria-describedby="btn_addtipo">
               <div class="input-group-append">
-                <button class="btn btn-outline-primary" type="button" id="btn_addtipo">Agregar</button>
+                <button class="btn btn-outline-primary proctipoprod" type="button" id="btn_addtipo">Agregar</button>
               </div>
             </div>
               <div class="list-group">
@@ -87,20 +88,29 @@
       <div class="col">
         <div class="card">
           <input type="hidden" id="tipoprod">
+          <input type="hidden" id="hidsubcatego">
           <h6 class="card-header" data-toggle="collapse" href="#collapsesubcategorias" role="button" aria-expanded="true" aria-controls="collapsesubcategorias">Sub Categorías <small><span class="text-muted"> - Sub categorías de productos</span></small></h6>
           <div class="collapse" id="collapsesubcategorias">
           <div class="card-body">
-            <div class="input-group mb-3">
-              <input type="text" class="form-control" placeholder="Sub Categoría" aria-label="Sub Categoría" id="nom_addcatego" aria-describedby="btn_addcatego">
-              <div class="input-group-append">
-                <button class="btn btn-outline-primary" type="button" id="btn_addcatego">Agregar</button>
+            <div class="row">
+              <div class="col-sm-2" id="opt-img" align="center">
+                <a href="#" data-toggle="modal" data-target="#imgCatego">Agregar<br>imagen</a>
+                <!-- <img src="" class="img-fluid" alt="Responsive image"> -->
+              </div>
+              <div class="col-sm-10">
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" placeholder="Sub Categoría" aria-label="Sub Categoría" id="nom_addcatego" aria-describedby="btn_addcatego">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-primary procsubcatego" type="button" id="btn_addcatego">Agregar</button>
+                  </div>
+                </div>
               </div>
             </div>
-              <ul class="list-group">
-                <section id="categorias">
-                  <!-- JS -->
-                </section>
-              </ul>
+            <ul class="list-group">
+              <section id="categorias">
+                <!-- JS -->
+              </section>
+            </ul>
           </div>
           </div> <!-- end collapse -->
         </div> <!-- end card -->
@@ -289,7 +299,7 @@
     <br>
     <div class="card p-2" style="background: #f8f8f8; border: none">
     <div class="row">
-      <div class="col">
+      <div class="col-md-6">
         <div class="card">
           <h6 class="card-header" data-toggle="collapse" href="#collapsetarifas" role="button" aria-expanded="true" aria-controls="collapsetarifas">Tarifa Express<small><span class="text-muted"> - La tarifa se define automáticamente al establecer un precio por /km, de no ser así, establezca un precio para el envío de las ordenes por tarifa fija.</span></small></h6>
           <div class="collapse" id="collapsetarifas">
@@ -329,7 +339,7 @@
           </div> <!-- end collapse -->
         </div> <!-- end card -->
       </div> <!-- end col -->
-      <div class="col">
+      <div class="col" style="display: none">
         <div class="card">
           <h6 class="card-header" data-toggle="collapse" href="#collapsenuevo" role="button" aria-expanded="true" aria-controls="collapsenuevo">Nuevo</h6>
           <div class="collapse" id="collapsenuevo">
@@ -343,6 +353,33 @@
     </div>
 
     <br><br>
+
+<!-- MODAL -->
+<div class="modal fade" id="imgCatego" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Imagen de categoría</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-sm-12 pt-3" align="center">
+            <form action="../upload.php" method="post" id="img-upload" class="dropzone needsclick dz-clickable">
+              <input type="hidden" name="idcatego">
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" id="applyimg">Aplicar</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 	</main>
 	

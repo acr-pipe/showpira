@@ -75,7 +75,7 @@
     <table class="table table-hover" data-sort="table">
       <thead>
         <tr>
-          <th><input type="checkbox" class="bsn" id="selectAll"></th>
+          <!-- <th><input type="checkbox" class="bsn" id="selectAll"></th> -->
           <th>Orden</th>
           <th>Nombre de cliente</th>
           <th>Fecha</th>

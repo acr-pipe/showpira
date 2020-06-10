@@ -19,6 +19,10 @@ $(function(){
 
 });
 
+$(document).on('click', '.print', function() {
+    window.open('facturacion?accion=6&id=1"');
+});
+
 function showDatos(videstado) {
     console.log( arr('login',4,'',28,videstado,0,0,0) )
     var p = arr('login',6,'',28,videstado,0,1,$("#ordenLlegada"));

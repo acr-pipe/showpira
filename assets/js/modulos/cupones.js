@@ -484,6 +484,69 @@ $(document).on("keyup","#vsearch",function(){
     }
 });
 
+$(document).on('keyup', '#prec_cupo', function() {
+	console.log('CLICK PREC CUPO', $(this).val());
+	var ivi = $("#ivi_cupo").val() == '' ? 13 : parseInt($("#ivi_cupo").val());
+	var precio = $(this).val() == '' ? 0 : parseInt($(this).val());
+	var impuesto = $("#imv_cupo").val() == '' ? 0 : parseInt($("#imv_cupo").val());
+	var total = $("#tot_cupo").val() == '' ? 0 : parseInt($("#tot_cupo").val());
+	totalizar(precio,impuesto,ivi,total);
+});
+
+$(document).on('keyup', '#imv_cupo', function() {
+	var ivi = $("#ivi_cupo").val() == '' ? 13 : parseInt($("#ivi_cupo").val());
+	var precio = $("#prec_cupo").val() == '' ? 0 : parseInt($("#prec_cupo").val());
+	var impuesto = $(this).val() == '' ? 0 : parseInt($(this).val());
+	var total = $("#tot_cupo").val() == '' ? 0 : parseInt($("#tot_cupo").val());
+	totalizar(precio,impuesto,ivi,total);
+});
+
+$(document).on('keyup', '#ivi_cupo', function() {
+	var ivi = $(this).val() == '' ? 13 : parseInt($(this).val());
+	var precio = $("#prec_cupo").val() == '' ? 0 : parseInt($("#prec_cupo").val());
+	var impuesto = $("#imv_cupo").val() == '' ? 0 : parseInt($("#imv_cupo").val());
+	var total = $("#tot_cupo").val() == '' ? 0 : parseInt($("#tot_cupo").val());
+	totalizar(precio,impuesto,ivi,total);
+});
+
+$(document).on('keyup', '#tot_cupo', function() {
+	var ivi = $("#ivi_cupo").val() == '' ? 13 : parseInt($("#ivi_cupo").val());
+	var precio = $("#prec_cupo").val() == '' ? 0 : parseInt($("#prec_cupo").val());
+	var impuesto = $("#imv_cupo").val() == '' ? 0 : parseInt($("#imv_cupo").val());
+	var total = $(this).val() == '' ? 0 : parseInt($(this).val());
+	totalizar(precio,impuesto,ivi,total);
+});
+
+$(document).on('change', '#chkivi_cupo', function() {
+	var ivi = $("#ivi_cupo").val() == '' ? 13 : parseInt($("#ivi_cupo").val());
+	var precio = $("#prec_cupo").val() == '' ? 0 : parseInt($("#prec_cupo").val());
+	var impuesto = $("#imv_cupo").val() == '' ? 0 : parseInt($("#imv_cupo").val());
+	var total = $("#tot_cupo").val() == '' ? 0 : parseInt($("#tot_cupo").val());
+	totalizar(precio,impuesto,ivi,total);
+});
+
+function totalizar(pre, imv, ivi, tot) {
+	var chkivi = $("#chkivi_cupo").is(':checked') ? 1 : 0;
+	console.log(pre, imv, ivi, tot, chkivi);
+	var impuesto = pre * (ivi/100);
+	var total = 0;
+	if (chkivi == 1) {
+		$("#ivi_cupo").attr('disabled', false);
+		console.log('impuesto: ' + impuesto);
+		$("#imv_cupo").val(impuesto);
+	}else{
+		$("#ivi_cupo").attr('disabled', true);
+		$("#imv_cupo").val('');
+	}
+	total = chkivi != 0 ? pre + impuesto : pre;
+	console.log('total: ' + total);
+	$("#tot_cupo").val(total);
+}
+
+$(document).on('change', '#ivi_cupo', function() {
+	var id = $(this).is(':checked');
+});
+
 function validaAddCupo() {
 
 	if ($("#nom_cupo").val() == '') {

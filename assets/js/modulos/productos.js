@@ -69,20 +69,119 @@ var detail = [];
 $(document).on('click','.optn', function() {
 	var id = $(this).attr('id').substr(1);
 	$("#hidprod").val(id);
+	var price = arr('login',4,'precio',1,'id = ' + id,0,0,0)[0][0][0];
+	$("#hidden_price").val(price);
 	$('#modal_producto_detail').modal('show');
-	$("#text_category").attr('disabled', false);
-	$("#add_category").attr('disabled', false);
-	$("#multiple_option").prop('checked', false);
-	$("#multiple_option").attr('disabled', true);
-	$("#text_option").val('').attr('disabled', true);
-	$("#text_value").val('').attr('disabled', true);
-	$("#add_subcategory").attr('disabled', true);
-	$("#list_categories").html('');
-	$("#list_subcategories").html('');
-	$("#hidden_category").val('');
-	setTimeout(function() {
-		$("#text_category").focus();
-	}, 500);
+	$("#product_price").text(price);
+	$("#total_price").text(0);
+	var db_categories = arr('login',4,'',102,id,0,0,0);
+	console.log(db_categories);
+	var obj = db_categories[0];
+	if (obj.length == 0) {
+		$("#text_category").attr('disabled', false);
+		$("#add_category").attr('disabled', false);
+		$("#multiple_option").prop('checked', false);
+		$("#multiple_option").attr('disabled', true);
+		$("#text_option").val('').attr('disabled', true);
+		$("#text_value").val('').attr('disabled', true);
+		$("#add_subcategory").attr('disabled', true);
+		$("#list_categories").html('');
+		$("#list_subcategories").html('');
+		$("#hidden_category").val('');
+		setTimeout(function() {
+			$("#text_category").focus();
+		}, 500);
+	} else {
+		// insert category to #list_categories
+		console.log(obj)
+		$("#list_categories").html('');
+		for (var i = 0; i < obj.length; i++) {
+			console.log(obj[i]);
+			$("#list_categories").append('<li class="list-group-item chooseCategory" idcategory="' + obj[i][0] + '" id="list_' + obj[i][2].replace(' ', '_') + '">' +
+				  obj[i][2] +
+				  '<span data-feather="x-circle" class="der delsub text-danger pointer delete_category" idcategory="' + obj[i][0] + '" id="delete_' + obj[i][2].replace(' ', '_') + '" style="font-size: 1px"></span>' +
+			'</li>');
+		}
+		feather.replace();
+	}
+});
+
+$(document).on('click', '.chooseCategory', function() {
+	var id = $(this).attr('id').substr(5);
+	var idcategory = $(this).attr('idcategory');
+	console.log(id);
+	$("#text_option").attr('disabled', false);
+	$("#text_value").attr('disabled', false);
+	$("#add_subcategory").attr('disabled', false);
+	$("#save_categories").attr('idcategory', idcategory);
+	var subcategory = arr('login',4,'',104,idcategory,0,0,0);
+	console.log(subcategory);
+	var ischecked = '';
+	var total = 0;
+	detail = [];
+	var obj = subcategory[0];
+	$("#hidden_category").val(id.replace(' ', '_'));
+	if (obj.length > 0) {
+		$("#multiple_option").prop('checked', false).attr('disabled', false);
+		$("#list_subcategories").html('');
+		obj[0][4] == 0 ? $("#multiple_option").prop('checked', false).attr('disabled', true) : $("#multiple_option").prop('checked', true).attr('disabled', true);
+		for (var i = 0; i < obj.length; i++) {
+			console.log(obj[i]);
+			if (obj[i][5] == 1) {
+				ischecked = 'checked';
+				total += parseInt(obj[i][3]);
+			} else {
+				ischecked = '';
+			}
+			$("#total_price").html(total);
+			if (obj[i][4] == 1) {
+				$("#list_subcategories").append('<li class="list-group-item pb-0 category'+id.replace(' ', '_')+'" id="subcategory_' + obj[i][2].replace(' ', '_') + '">' +
+					'<div class="row container">' +
+						'<div class="col-1">' +
+							'<div class="form-group">' +
+								'<input class="form-check-input inputcheck_subcategory" type="checkbox" id="check_'+obj[i][2].replace(' ', '_')+'" '+ischecked+'>' +
+								'<label class="form-check-label"></label>' +
+							'</div>' +
+						'</div>' +
+						'<div class="col-5">' +
+							'<label class="name_subcategory">' + obj[i][2] + '</label>' +
+						'</div>' +
+						'<div class="col-5">' +
+							'<label class="value_subcategory" id="value_' + obj[i][2].replace(' ', '_') + '">₡ ' + obj[i][3] + '</label>' +
+						'</div>' +
+						'<div class="col-1">' +
+							'<span data-feather="x-circle" id="deletesub_' + obj[i][2].replace(' ', '_') + '" class="der delsub text-danger pointer delete_subcategory" style="font-size: 1px"></span>' +
+						'</div>' +
+					'</div>' +
+				'</li>');
+			} else {
+				$("#list_subcategories").append('<li class="list-group-item pb-0 category'+id.replace(' ', '_')+'" id="subcategory_' + obj[i][2].replace(' ', '_') + '">' +
+					'<div class="row container">' +
+						'<div class="col-1">' +
+							'<div class="form-group">' +
+								'<input class="form-check-input inputcheck_subcategory" type="radio" name="radio_subcategories" id="check_'+obj[i][2].replace(' ', '_')+'" '+ischecked+'>' +
+								'<label class="form-check-label"></label>' +
+							'</div>' +
+						'</div>' +
+						'<div class="col-5">' +
+							'<label class="name_subcategory">' + obj[i][2] + '</label>' +
+						'</div>' +
+						'<div class="col-5">' +
+							'<label class="value_subcategory" id="value_' + obj[i][2].replace(' ', '_') + '">₡ ' + obj[i][3] + '</label>' +
+						'</div>' +
+						'<div class="col-1">' +
+							'<span data-feather="x-circle" id="deletesub_' + obj[i][2].replace(' ', '_') + '" class="der delsub text-danger pointer delete_subcategory" style="font-size: 1px"></span>' +
+						'</div>' +
+					'</div>' +
+				'</li>');
+			}
+			detail.push(obj[i][2]+','+obj[i][3]);
+		}
+	} else {
+		console.log('no hay datos');
+		$("#list_subcategories").html('');
+	}
+	feather.replace();
 });
 
 $(document).on('click', '#add_category', function() {
@@ -94,7 +193,7 @@ $(document).on('click', '#add_category', function() {
 		// hidden category
 		$("#hidden_category").val(category);
 		// insert category to #list_categories
-		$("#list_categories").append('<li class="list-group-item" id="list_' + formated_category + '">' +
+		$("#list_categories").append('<li class="list-group-item chooseCategory" id="list_' + formated_category + '">' +
           	category +
           	'<span data-feather="x-circle" class="der delsub text-danger pointer delete_category" id="delete_' + formated_category + '" style="font-size: 1px"></span>' +
         '</li>');
@@ -106,7 +205,10 @@ $(document).on('click', '#add_category', function() {
 		$("#text_option").attr('disabled', false);
 		$("#text_value").attr('disabled', false);
 		$("#add_subcategory").attr('disabled', false);
+		$("#total_price").html(0);
+		$("#list_subcategories").html('');
 		$("#text_option").focus();
+		feather.replace();
 	}else{
 		console.log(validation);
 	}
@@ -114,7 +216,14 @@ $(document).on('click', '#add_category', function() {
 
 $(document).on('click', '.delete_category', function() {
 	var id = $(this).attr('id').substr(7);
+	var idcategory = $(this).attr('idcategory');
+	console.log(id, idcategory);
+	if (idcategory != undefined) {
+		var delete_category = arr('login',4,'',103,'3,' + idcategory + ',0,""');
+		console.log(delete_category);
+	}
 	$("#list_" + id).remove();
+	$("#list_subcategories").html('');
 	$("#multiple_option").prop('checked', false).attr('disabled', true);
 	$("#text_option").val('').attr('disabled', true);
 	$("#text_value").val('').attr('disabled', true);
@@ -122,7 +231,6 @@ $(document).on('click', '.delete_category', function() {
 	$("#text_category").attr('disabled', false).focus();
 	$("#add_category").attr('disabled', false);
 	$("#hidden_category").val('');
-	$("#list_subcategories").html('');
 });
 
 $(document).on('click', '#add_subcategory', function() {
@@ -135,11 +243,11 @@ $(document).on('click', '#add_subcategory', function() {
 	console.log(validation);
 	if (!validation) {
 		if (multiple) {
-			$("#list_subcategories").append('<li class="list-group-item pb-0 category'+category+'">' +
+			$("#list_subcategories").append('<li class="list-group-item pb-0 category'+category+'" id="subcategory_' + formated_option + '">' +
 				'<div class="row container">' +
 					'<div class="col-1">' +
 						'<div class="form-group">' +
-							'<input class="form-check-input" type="checkbox" id="check_'+formated_option+'">' +
+							'<input class="form-check-input inputcheck_subcategory" type="checkbox" id="check_'+formated_option+'">' +
 							'<label class="form-check-label"></label>' +
 						'</div>' +
 					'</div>' +
@@ -147,7 +255,7 @@ $(document).on('click', '#add_subcategory', function() {
 						'<label class="name_subcategory">' + option + '</label>' +
 					'</div>' +
 					'<div class="col-5">' +
-						'<label class="value_subcategory">₡ ' + value + '</label>' +
+						'<label class="value_subcategory" id="value_' + formated_option + '">₡ ' + value + '</label>' +
 					'</div>' +
 					'<div class="col-1">' +
 						'<span data-feather="x-circle" id="deletesub_' + formated_option + '" class="der delsub text-danger pointer delete_subcategory" style="font-size: 1px"></span>' +
@@ -159,7 +267,7 @@ $(document).on('click', '#add_subcategory', function() {
 				'<div class="row container">' +
 					'<div class="col-1">' +
 						'<div class="form-group">' +
-							'<input class="form-check-input" type="radio" name="radio_subcategories" id="check_'+formated_option+'">' +
+							'<input class="form-check-input inputcheck_subcategory" type="radio" name="radio_subcategories" id="check_'+formated_option+'">' +
 							'<label class="form-check-label"></label>' +
 						'</div>' +
 					'</div>' +
@@ -179,23 +287,55 @@ $(document).on('click', '#add_subcategory', function() {
 		// insert to array detail
 		detail.push(option+','+value);
 		// clear fields
+		$("#multiple_option").attr('disabled', true);
 		$("#text_option").val('');
 		$("#text_value").val('');
 		$("#text_option").focus();
 	}
 });
 
+$(document).on('change', '.inputcheck_subcategory', function() {
+	var multiple = $("#multiple_option").is(':checked');
+	var total = 0;
+	if (multiple) {
+		$(".inputcheck_subcategory").each(function() {
+			if ($(this).is(':checked')) {
+				var id = $(this).attr('id').substr(6);
+				var value = parseInt($("#value_" + id).text().substr(2));
+				total += value;
+			}
+		});
+	} else {
+		if ($(this).is(':checked')) {
+			var id = $(this).attr('id').substr(6);
+			var value = parseInt($("#value_" + id).text().substr(2));
+			total = value;
+		}
+	}
+	$("#total_price").text(total);
+});
+
 $(document).on('click', '.delete_subcategory', function() {
 	var id = $(this).attr('id').substr(10);
 	var value = $("#value_" + id).text();
 	var arr = id.replace('_', ' ') + ',' + value;
+	var multiple = $("#multiple_option").is(':checked');
+	var price = parseInt($("#total_price").text());
+	var total = 0;
 	console.log(id, value, arr);
+	// totalizar
+	if ($("#check_" + id).is(':checked')) {
+		console.log('price', price, 'value', value);
+		total = price - parseInt(value.substr(2));
+		console.log('total', total);
+		$("#total_price").text(total);
+	}
 	// pop from array
-	// remove list
 	var i = detail.indexOf(arr);
 	console.log(i);
 	detail.splice(i, 1);
 	console.log(detail);
+	// remove list
 	$("#subcategory_" + id).remove();
 });
 
@@ -203,92 +343,77 @@ $(document).on('click', '#save_categories', function() {
 	console.log('save categories');
 	var idproducto = $("#hidprod").val();
 	var category = $("#hidden_category").val();
-	console.log(idproducto,category);
-	var db_category = arr('login',4,'',103,'1,0,'+idproducto+',"'+category+'"',0,0,0);
-	console.log(db_category)
-	if (db_category['succed']) {
-		console.log(detail)
+	var idcategory = $(this).attr('idcategory');
+	var price = parseInt($("#product_price").text()) + parseInt($("#total_price").text());
+	console.log(idproducto, idcategory, category, price);
+	if (idcategory == undefined) {
+		console.log('no existe categoria');
+		idcategory = arr('login',4,'',103,'1,0,'+idproducto+',"'+category+'"',0,0,0);
+		console.log(idcategory);
+		if (idcategory['succed']) {
+			console.log(detail);
+			var updt = arr('login',7,'2',1,'precio = ' + price,'id = ' + idproducto,0,0);
+			console.log(updt);
+			for (var i = 0; i < detail.length; i++) {
+				var option = detail[i].split(',')[0];
+				var value = detail[i].split(',')[1];
+				var multiple = $("#multiple_option").is(':checked') ? 1 : 0;
+				console.log('checking option', option)
+				var isChecked = $("#check_"+option.replace(' ','_')).is(':checked') ? 1 : 0;
+				console.log(option,value,multiple,isChecked);
+				var db_subcategory = arr('login',4,'',101,'1,0,'+idcategory[0][0][0]+',"'+option+'",'+value+','+multiple+','+isChecked,0,0,0);
+				console.log(db_subcategory);
+				if (db_subcategory['succed']) {
+					console.log('success');
+				}
+			}
+			detail = [];
+			$("#text_category").attr('disabled', false);
+			$("#add_category").attr('disabled', false);
+			$("#list_categories").html('');
+			$("#multiple_option").attr('checked', false);
+			$("#list_subcategories").html('');
+			$("#hidden_category").val(0);
+			$("#text_category").focus();
+			$("#multiple_option").attr('disabled',true);
+			$("#text_option").attr('disabled',true);
+			$("#text_value").attr('disabled',true);
+			$("#add_subcategory").attr('disabled',true);
+		}else{
+			console.log(idcategory[0]['ERROR']);
+		}
+	} else {
+		console.log('ya existe categoria');
+		console.log(detail);
+		console.log('price', price, 'idproducto', idproducto);
+		// var updt = arr('login',7,'2',1,'precio = ' + price,'id = ' + idproducto,0,0);
+		// console.log(updt);
 		for (var i = 0; i < detail.length; i++) {
 			var option = detail[i].split(',')[0];
 			var value = detail[i].split(',')[1];
-			var multiple = $("#multiple_option").is(':checked') ? 1 : 0;
-			console.log('checking option', option)
 			var isChecked = $("#check_"+option.replace(' ','_')).is(':checked') ? 1 : 0;
-			console.log(option,value,multiple,isChecked);
-			var db_subcategory = arr('login',4,'',101,'1,0,'+db_category[0][0][0]+',"'+option+'",'+value+','+multiple+','+isChecked,0,0,0);
+			console.log(idcategory, option, value, multiple, isChecked);
+
+			var db_subcategory = arr('login',4,'',101,'2,0,'+idcategory[0][0][0]+',"'+option+'",'+value+',0,'+isChecked,0,0,0);
 			console.log(db_subcategory);
 			if (db_subcategory['succed']) {
 				console.log('success');
 			}
 		}
-		detail = [];
-		$("#text_category").attr('disabled', false);
-		$("#add_category").attr('disabled', false);
-		$("#list_categories").html('');
-		$("#multiple_option").attr('checked', false);
-		$("#list_subcategories").html('');
-		$("#hidden_category").val(0);
-		$("#text_category").focus();
-		$("#multiple_option").attr('disabled',true);
-		$("#text_option").attr('disabled',true);
-		$("#text_value").attr('disabled',true);
-		$("#add_subcategory").attr('disabled',true);
-	}else{
-		console.log(db_category[0]['ERROR']);
+		// detail = [];
+		// $("#text_category").attr('disabled', false);
+		// $("#add_category").attr('disabled', false);
+		// $("#list_categories").html('');
+		// $("#multiple_option").attr('checked', false);
+		// $("#list_subcategories").html('');
+		// $("#hidden_category").val(0);
+		// $("#text_category").focus();
+		// $("#multiple_option").attr('disabled',true);
+		// $("#text_option").attr('disabled',true);
+		// $("#text_value").attr('disabled',true);
+		// $("#add_subcategory").attr('disabled',true);
 	}
 });
-
-// $(document).on('click', '#addToDetail', function() {
-// 	var detalle = $("#vdetalle").val();
-// 	var valor = $("#vvalor").val();
-// 	var vid = 1;
-// 	// var formula = $("[name=]")
-// 	var tabla = $("#data-table-detalles").DataTable();
-// 	// agrega a base de datos
-// 	var detalleproducto = arr('login',4,'',101,'1,0,' + vid + ',"' + detalle + '",' + valor + ',0');
-// 	console.log(detalleproducto);
-// 	if (detalleproducto['succed']) {
-// 		// agrega a la table detalles
-// 		tabla.destroy();
-// 		if (detalle != '' && valor != '') {
-// 			$("#getDetalles").append('<tr>' +
-// 				'<td>' + detalle + '</td>' +
-// 				'<td>' + valor + '</td>' +
-// 				'<td style="width: 40% !important">' +
-// 					'<div class="row form-check">' +
-// 						'<input class="form-check-input formula" type="radio" name="formula" id="s' + detalleproducto[0][0][0] + '" value="1" checked>' +
-// 						'<label class="form-check-label" for="s' + detalleproducto[0][0][0] + '">' +
-// 							'Sumar al precio del producto' +
-// 						'</label>' +
-// 					'</div>' +
-// 					'<div class="row form-check">' +
-// 						'<input class="form-check-input formula" type="radio" name="formula" id="r' + detalleproducto[0][0][0] + '" value="2">' +
-// 						'<label class="form-check-label" for="r' + detalleproducto[0][0][0] + '">' +
-// 							'Restar al precio del producto' +
-// 						'</label>' +
-// 					'</div>' +
-// 				'</td>' +
-// 			'</tr>');
-// 			$("#data-table-detalles").DataTable();
-// 			$("#vdetalle").val('');
-// 			$("#vvalor").val('');
-// 		}	
-// 	} else {
-// 		console.log(detalleproducto[0]['ERROR']);
-// 	}
-// });
-
-// $(document).on('change', '[name=formula]', function() {
-// 	var id = $(this).attr('id').substr(1);
-// 	var formula = $(this).val();
-// 	var actdetalle = arr('login',4,'',101,'2,' + id + ',0,"",0,' + formula);
-// 	console.log(actdetalle);
-// 	if (actdetalle['succed']) {
-// 		console.log('succed')
-// 	} else {
-// 		console.log(actdetalle[0]['ERROR']);
-// 	}
-// });
 
 $(document).on('change', '#tipo_prod', function() {
 
@@ -403,7 +528,10 @@ $(document).on('click', '.rmimg', function() {
 	if (a[0] > 0) {
 		$("#img"+id).remove();
 		notification('Imagen eliminada correctamente', 'success', 3500);
-		$("#img-upload").html('<div class="dz-default dz-message"><span>Arrastre imágenes aquí para subirlas</span></div>');
+		console.log('a[0].length', a[0].length);
+		if (a[0].length == 1) {
+			$("#img-upload").html('<div class="dz-default dz-message"><span>Arrastre imágenes aquí para subirlas</span></div>');
+		}
 	}else{
 		notification('No se puede eliminar esta imagen', 'danger', 3500);
 	}

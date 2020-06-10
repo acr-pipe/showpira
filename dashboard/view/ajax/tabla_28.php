@@ -11,11 +11,11 @@ if (sizeof($transaccion) > 0) {
 		if ($obj[0] != $idorden) {
 
 			if ($obj[5] == 1) {
-				$badge = '<small><label class="badge badge-primary text-wrap" style="width: 3rem;">express</label></small>';
+				$badge = '<small><label class="badge badge-primary text-white text-wrap" style="width: 3rem;">express</label></small>';
 				$estado = '<li class="list-group-item p-1"><a class="asign" href="#" id="e'.$obj[0].'">Enviar</a></li>';
 				$color = 'primary';
 			}else if ($obj[5] == 2) {
-				$badge = '<small><label class="badge badge-dark text-wrap" style="width: 3rem;">recoge</label></small>';
+				$badge = '<small><label class="badge badge-dark text-white text-wrap" style="width: 3rem;">recoge</label></small>';
 				$estado = '<li class="list-group-item p-1"><a class="asign" href="#" id="i'.$obj[0].'">Entregar</a></li>';
 				$color = 'dark';
 			}else{
@@ -47,13 +47,17 @@ if (sizeof($transaccion) > 0) {
 				</div>
 				<div class="card-footer border-'.$color.' text-center">
 					<small class="text-muted">Hace <b id="t'.$obj[0].'" fecha="'.$obj[1].'" class="timeid">123</b></small><br>
-					<!-- <small style="color: #B0B3B6">PRESIONE AQUI CUANDO ESTÉ LISTA LA ORDEN</small> -->
+					<button class="btn btn-sm btn-outline-primary print">
+						<small>IMPRIMIR COMANDA</small>
+					</button>
 				</div>
 			</div>';
 			$idorden = $obj[0];
 		}
 	}
-}
+}else{ ?>
+    <div align="center">No hay datos disponibles</div>
+<?php }
 
 
 ?>

@@ -34,6 +34,38 @@
 				<!-- JS -->
 			</section>
 		</div>
+
+		<!-- Modal -->
+		<div class="modal fade" id="aDeliver" tabindex="-1" role="dialog" aria-labelledby="aDeliver" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		  <div class="modal-content">
+		    <div class="modal-header">
+		      <h5 class="modal-title" id="aDeliverlabel">Asignar orden a:</h5>
+		      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		        <span aria-hidden="true">&times;</span>
+		      </button>
+		    </div>
+		    <div class="modal-body">
+		      <div class="input-group">
+		        <div class="input-group-prepend">
+		          <span class="input-group-text bg-light">
+		            <span data-feather="search"></span>
+		          </span>
+		        </div>
+		        <input type="text" class="form-control" id="vsearch" placeholder="Buscar por nombre o teléfono">
+		      </div>
+		      <br>
+		      <ul class="list-group" id="showDelivery">
+		        
+		      </ul>
+		    </div>
+		    <div class="modal-footer">
+		      <!-- <button type="button" class="btn btn-light" data-dismiss="modal">Salir</button> -->
+		      <button type="button" class="btn btn-primary" viddriver="" id="asignDelivery" idorden="0" estado="0" accion="0">Asignar</button>
+		    </div>
+		  </div>
+		</div>
+		</div>
 	
 	</main>
 

@@ -15,14 +15,14 @@ if (sizeof($transaccion) > 0) {
 	}else{
 		$color = 'info';
 	}
+		// <td><input type="checkbox" class="rdItem"></td>
 		echo '<tr>
-				<td><input type="checkbox" class="rdItem"></td>
 				<td>';
-          if ($obj[2] == 1){ echo '<span class="text-primary">•</span>'; }
-          elseif($obj[2] == 2){ echo '<span class="text-dark">•</span>'; }
-          else{ echo '<span class="text-warning">•</span>'; }
+          		if ($obj[2] == 1){ echo '<span class="text-primary">•</span>'; }
+          		elseif($obj[2] == 2){ echo '<span class="text-dark">•</span>'; }
+          		else{ echo '<span class="text-warning">•</span>'; }
 
-          echo '&nbsp;<a href="#" class="detailOrd" id="o'.$obj[0].'" data-toggle="modal" data-target="#modal-order"'.
+          echo '&nbsp;<a href="#" class="detailOrd" id="o'.$obj[0].'" idpago="'.$obj[18].'" data-toggle="modal" data-target="#modal-order"'.
 				'fecha="'.$obj[4].'" isexpress="'.$obj[2].'">ORD-#'.$obj[18].'</a></td>
 				<td>'.$obj[6].'</td>
 				<td>'.$obj[3].'</td>

@@ -1,4 +1,29 @@
+Dropzone.autoDiscover = false;
+var myDropzone;
+
 $(function(){
+
+	myDropzone = new Dropzone("#img-upload", {
+		url: '../upload.php',
+		autoProcessQueue:false,
+		maxFilesize: 1,
+		maxFiles: 1,
+		uploadMultiple: false,
+		resizeWidth: 850,
+		acceptedFiles: 'image/*, video/*',
+		addRemoveLinks:true,
+		accept: function(file, done) {
+	    if (file.name == "user.png" || file.name == "avatar.svg" || file.name == "signin.svg") {
+	      done("Naha, tú no!.");
+	    }
+	    	else { done(); }
+	  	},
+		init: function() {
+		  this.on("uploadprogress", function(file, progress) {
+		    console.log("File progress", progress);
+		  });
+		}
+	})
 
 	loadtipoprods();
 	loadinfohorario();
@@ -14,6 +39,17 @@ $(function(){
 	$("#collapsenuevo").collapse({ toggle: true });
 });
 
+$(document).on('click', '#applyimg', function() {
+	console.log('src', $(".dz-image").children().attr('src') );
+	var img = $(".dz-image").children().attr('src');
+	if (img == undefined) {
+		$("#opt-img").html('<a href="#" data-toggle="modal" data-target="#imgCatego">Agregar<br>imagen</a>');
+	} else {
+		$("#opt-img").html('<a data-toggle="modal" data-target="#imgCatego"><img src="'+img+'" id="imgtoupload" class="img-fluid rounded" style="border: #007bff 1px solid; padding: 1%" alt="Responsive image"></a>');
+	}
+	$("#imgCatego").modal('hide');
+});
+
 $(document).on('click', '.tprod', function() {
 	var id = $(this).attr('id').substr(1);
 	// console.log(id);
@@ -21,6 +57,8 @@ $(document).on('click', '.tprod', function() {
 	$(this).addClass('active');
 	$("#tipoprod").val(id);
 	loadcategorias( id );
+	var b = arr('login',4,'imagen',57,'id = '+id,0,0,0);
+	console.log('categorias', b);
 });
 
 $(document).on('click', '#addinfoferiados', function() {
@@ -95,7 +133,7 @@ $(document).on('click', '#addinfohorarios', function() {
 		console.log(a);
 	}else{
 		console.log(vInfohorario);
-		alert(vInfohorario);
+		notification(vInfohorario, 'danger', 3500);
 	}
 
 });
@@ -112,12 +150,12 @@ $(document).on('click', '#btn_addtipo', function() {
 		loadtipoprods();
 	}else{
 		console.log(valAddtipo);
-		alert(valAddtipo);
+		notification(valAddtipo, 'danger', 3500);
 	}
 });
 
 function validarAddtipo() {
-
+	
 	if ($("#nom_addtipo").val() == '') {
 		return 'Nombre de categoría requerido';
 		$("#nom_addtipo").focus();
@@ -144,15 +182,27 @@ $(document).on('click', '#btn_addcatego', function() {
 	var vnombre = $("#nom_addcatego").val();
 	var vtipoprod = $("#tipoprod").val();
 	var valAddcatego = validarAddcatego();
-	
+	var idcatego = $("#hidcatego").val();
 	if (valAddcatego == false) {
-		var a = arr('login',4,'',67,'1,0,"'+vnombre+'",'+vtipoprod+',@@impresa',0,0,0);
-		console.log(a);		
-		$("#nom_addcatego").val('');
+		var a = arr('login',4,'',67,'1,0,"'+vnombre+'","",'+vtipoprod+',@@impresa',0,0,0);
+		console.log('a', a);
+		console.log('A1', a[0][0][0]);
+		console.log('IMG',$(".dz-preview").length);
+			if ($(".dz-preview").length > 0) {
+				console.log('SI HAY IMAGEN');
+				console.log('A2', a[0][0][0]);
+				$("input[name='idcatego']").val(a[0][0][0]);
+				myDropzone.processQueue();
+				$("#img-upload").html('<div class="dz-default dz-message"><span>Arrastre imágenes aquí para subirlas</span></div>');
+				vaciarInfoSubCatego();
+			}else{
+				// arr('login',7,1,133,'','null,\"../assets/imgupload/cars/car.png\",'+vid,0,0);
+				notification('No se subió la imagen!', 'danger', 3500);
+			}
 		loadcategorias( vtipoprod );
 	}else{
 		console.log(valAddcatego);
-		alert(valAddcatego);
+		notification(valAddcatego, 'danger', 3500);
 	}
 });
 
@@ -169,13 +219,101 @@ function validarAddcatego() {
 	return false;
 }
 
+$(document).on('click', '.edittipoprod', function() {
+	var vid = $(this).attr('id').substr(1);
+	var a = arr('login',4,'*',62,'id = '+vid,0,0,0)[0][0];
+	console.log('tipoprod', a);
+	$("#hidcatego").val(vid);
+	$("#nom_addtipo").val(a[1]);
+	$(".proctipoprod").text('Editar');
+	$(".proctipoprod").attr('id', 'btn_edittipo');
+	$(".proctipoprod").removeClass('btn-outline-primary');
+	$(".proctipoprod").addClass('btn-outline-warning');
+});
+
+$(document).on('click', '#btn_edittipo', function() {
+	var vid = $("#hidcatego").val();
+	var vnombre = $("#nom_addtipo").val();
+	var valAddtipo = validarAddtipo();
+	
+	if (valAddtipo == false) {
+		var a = arr('login',4,'',64,'2,'+vid+',"'+vnombre+'",@@impresa',0,0,0);
+		console.log(a);
+		if (a['succed']) {
+			$("#nom_addtipo").val('');
+			$("#hidcatego").val('');
+			loadtipoprods();
+			$(".proctipoprod").text('Agregar');
+			$(".proctipoprod").attr('id', 'btn_addcatego');
+			$(".proctipoprod").addClass('btn-outline-primary');
+			$(".proctipoprod").removeClass('btn-outline-warning');
+			notification('Categoría actualizada correctamente', 'success', 3500);
+		} else {
+			notification('No se pudo actualizar la información de esta categoría', 'danger', 3500);
+		}
+	}else{
+		console.log(valAddtipo);
+		notification(valAddtipo, 'danger', 3500);
+	}
+});
+
+$(document).on('click', '.editcatego', function() {
+	var vid = $(this).attr('id').substr(1);
+	$("#hidsubcatego").val(vid);
+	var vtipoprod = $(this).attr('tprod');
+	var a = arr('login',4,'*',57,'id = '+vid,0,0,0)[0][0];
+	console.log('catego', a);
+	$("#nom_addcatego").val(a[1]);
+	$("#opt-img").html('<a data-toggle="modal" data-target="#imgCatego"><img src="'+a[2]+'" id="imgtoupload" class="img-fluid rounded" style="border: #007bff 1px solid; padding: 1%" alt="Responsive image"></a>');
+	$("#tipoprod").val(a[3]);
+	$(".procsubcatego").text('Editar');
+	$(".procsubcatego").attr('id', 'btn_editcatego');
+	$(".procsubcatego").removeClass('btn-outline-primary');
+	$(".procsubcatego").addClass('btn-outline-warning');
+});
+
+$(document).on('click', '#btn_editcatego', function() {
+	var vid = $("#hidsubcatego").val();
+	console.log('vid', vid);
+	var nomcatego = $("#nom_addcatego").val();
+	console.log('nomcatego', nomcatego);
+	var vtipoprod = $("#tipoprod").val();
+	var himagensrc = $("#imgtoupload").attr('src');
+	console.log('himagensrc', himagensrc);
+
+	var valAddcatego = validarAddcatego();
+	if (valAddcatego == false) {
+		var b = arr('login',4,'',67,'2,'+vid+',"'+nomcatego+'","'+himagensrc+'",0,@impresa',0,0,0);
+		console.log(b);
+		if (b['succed']) {
+			notification('Información de subcategoría actualizada', 'success', 3500);
+			$(".procsubcatego").text('Agregar');
+			$(".procsubcatego").attr('id', 'btn_addcatego');
+			$(".procsubcatego").removeClass('btn-outline-warning');
+			$(".procsubcatego").addClass('btn-outline-primary');
+			vaciarInfoSubCatego();
+			loadcategorias( vtipoprod );
+		}else{
+			notification('No se pudo actualizar la información de la subcategoría', 'danger', 3500);
+		}
+	} else {
+		notification(valAddcatego, 'danger', 3500);
+	}
+});
+
 $(document).on('click', '.delcatego', function() {
 	var vid = $(this).attr('id').substr(1);
 	var vtipoprod = $(this).attr('tprod');
-	var a = arr('login',4,'',67,'3,'+vid+',"",0,@@impresa',0,0,0);
+	var a = arr('login',4,'',67,'3,'+vid+',"","",0,@@impresa',0,0,0);
 	console.log(a);
 	loadcategorias( vtipoprod );
 });
+
+function vaciarInfoSubCatego() {
+	$("#hidsubcatego").val(0);
+	$("#nom_addcatego").val('');
+	$("#opt-img").html('<a href="#" data-toggle="modal" data-target="#imgCatego">Agregar<br>imagen</a>');
+}
 
 function loadcategorias( vtipoprod ) {
 	var categorias = arr('login',6,'',66,'@@impresa,'+vtipoprod,0,1,$("#categorias"));

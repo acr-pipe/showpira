@@ -1,3 +1,44 @@
 .pointer { 
   cursor: pointer;
 }
+
+.list-group {
+    margin-top: 5px;
+}
+
+.dropzone {
+	margin: -15px 0px 0px -15px !important;
+    min-height: 75px !important;
+}
+
+.img-fluid {
+	max-width: 40px !important;
+}
+
+#img-upload {
+    width: 80%;
+    max-width: 80%;
+    height: 250px !important;
+    max-height: 250px !important;
+    border: 1px dashed rgba(0,0,0,0.2);
+    background: linear-gradient(90deg, #FAFAFA 20px, transparent 50%) center, linear-gradient(#FAFAFA 20px, transparent 50%) center, #FEFEFE;
+    overflow: scroll;
+    scroll-behavior: auto;
+}
+
+.dropzone .dz-preview .dz-details {
+    z-index: 20;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    font-size: 13px;
+    min-width: 80%;
+    max-width: 80%;
+    width: 80% !important;
+    height: 85% !important;
+    padding: 2em 1em;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.9);
+    line-height: 150%;
+}

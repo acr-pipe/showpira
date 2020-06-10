@@ -19,7 +19,15 @@
 	   $pagina = 0;
 	   	switch ($_REQUEST['accion']) {
 	   		case 1:
-	   			
+	   			$pagina = 1;
+	   			$miscelaneos = $kakaroto->kamehameha('',99,'@@impresa')[0];
+
+	   			$transaccion = $kakaroto->kamehameha('',34,$_REQUEST['id']);
+	   			$datos = $transaccion[0];
+	   			$ocultar = '';
+	   			$oc = '';
+	   			$repetir = 0;//isset($_REQUEST['x'])
+	   			require_once 'view/ajax/facturas/facturapv.php';
 	   			break;
 	   	}
 		if(!$pagina){

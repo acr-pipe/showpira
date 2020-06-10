@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.17, created on 2020-05-18 19:33:27
+<?php /* Smarty version 2.6.17, created on 2020-05-25 19:33:08
          compiled from ../view/menu.php */ ?>
 <!-- <nav class="navbar navbar-primary fixed-top bg-primary flex-md-nowrap p-0 shadow">
   <a class="navbar-brand col-sm-3 col-md-2 mr-0 text-white" href="#">App <i>food_court</i></a>
@@ -52,19 +52,19 @@
         <ul class="nav flex-column">
           <li class="nav-item per7100">
             <a class="nav-link" href="main">
-              <span data-feather="home"></span>
+              <span class="m-feather" data-feather="home"></span>
               Dashboard <span class="sr-only">(current)</span>
             </a>
           </li>
           <li class="nav-item per7100">
             <a class="nav-link" href="ordenes">
-              <span data-feather="folder"></span>
+              <span class="m-feather" data-feather="folder"></span>
               Ordenes
             </a>
             <ul>
               <a class="nav-link" href="allordenes">
                 <small>
-                  <span data-feather="folder-plus"></span>
+                  <span class="m-feather" data-feather="folder-plus"></span>
                   Todas las ordenes
                 </small>
               </a>
@@ -72,7 +72,7 @@
             <ul>
               <a class="nav-link" href="orderhistory">
                 <small>
-                  <span data-feather="calendar"></span>
+                  <span class="m-feather" data-feather="calendar"></span>
                   Historial de ordenes
                 </small>
               </a>
@@ -80,31 +80,31 @@
           </li>
           <li class="nav-item per7100">
             <a class="nav-link" href="productos">
-              <span data-feather="shopping-cart"></span>
+              <span class="m-feather" data-feather="shopping-cart"></span>
               Productos
             </a>
           </li>
           <li class="nav-item per7100">
             <a class="nav-link" href="cupones">
-              <span data-feather="tag"></span>
+              <span class="m-feather" data-feather="tag"></span>
               Cupones
             </a>
           </li>
           <li class="nav-item per7100">
             <a class="nav-link" href="seguimiento">
-              <span data-feather="map-pin"></span>
+              <span class="m-feather" data-feather="map-pin"></span>
               Seguimiento
             </a>
           </li>
           <li class="nav-item per7100">
             <a class="nav-link" href="reportes">
-              <span data-feather="bar-chart-2"></span>
+              <span class="m-feather" data-feather="bar-chart-2"></span>
               Reportes
             </a>
           </li>
           <li class="nav-item per7100">
             <a class="nav-link" href="setting">
-              <span data-feather="settings"></span>
+              <span class="m-feather" data-feather="settings"></span>
               Configuración
             </a>
           </li>
@@ -113,31 +113,31 @@
 <!--         <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
           <span>Saved reports</span>
           <a class="d-flex align-items-center text-muted" href="#">
-            <span data-feather="plus-circle"></span>
+            <span class="m-feather" data-feather="plus-circle"></span>
           </a>
         </h6>
         <ul class="nav flex-column mb-2">
           <li class="nav-item">
             <a class="nav-link" href="#">
-              <span data-feather="file-text"></span>
+              <span class="m-feather" data-feather="file-text"></span>
               Current month
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">
-              <span data-feather="file-text"></span>
+              <span class="m-feather" data-feather="file-text"></span>
               Last quarter
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">
-              <span data-feather="file-text"></span>
+              <span class="m-feather" data-feather="file-text"></span>
               Social engagement
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">
-              <span data-feather="file-text"></span>
+              <span class="m-feather" data-feather="file-text"></span>
               Year-end sale
             </a>
           </li>

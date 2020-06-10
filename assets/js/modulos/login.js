@@ -1,5 +1,6 @@
 var crr = '';
 var conteo = 1;
+
 $(document).ready(function(){
 
  $(".modal").modal();
@@ -95,7 +96,6 @@ $(document).on('mouseout', '#verpass', function() {
     $(".passs").attr('type', 'password');
     feather.replace();
 });
-
 
 // $(document).on("click", "#loging", function() {
 //     getIn();

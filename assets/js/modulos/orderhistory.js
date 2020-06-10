@@ -30,6 +30,7 @@ $(document).on("change","#vsearchdate",function(){
 
 $(document).on("click",".detailOrd",function(){
 	var id = $(this).attr('id').substr(1);
+	var idpago = $(this).attr('idpago');
 	var fecha = $(this).attr('fecha');
 	var isexpress = $(this).attr('isexpress');
 	var badge = '';
@@ -42,7 +43,7 @@ $(document).on("click",".detailOrd",function(){
 		badge = '<span class="badge badge-warning">servido</span>'
 	}
 
-	$("#numOrd").html(id);
+	$("#numOrd").html(idpago);
 	$("#fechaOrd").html(fecha);
 	$("#isexpress").html(badge);
 

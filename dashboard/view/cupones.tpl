@@ -72,7 +72,7 @@
             <input type="text" class="form-control text-right" id="prec_cupo">
           </div>
         </div>
-        <div class="col-md-3 mb-3">
+        <div class="col-md-3 mb-3" style="display: none">
           <label for="ivi_cupo">I.V.I</label>
           <div class="input-group mb-3">
             <div class="input-group-prepend">
@@ -83,7 +83,7 @@
             <input type="text" class="form-control text-right" id="ivi_cupo" placeholder="13%" value="" aria-label="I.V.I" disabled>
           </div>
         </div>
-        <div class="col-md-3 mb-3">
+        <div class="col-md-3 mb-3" style="display: none">
           <label for="imv_cupo">Impuesto</label>
           <div class="input-group">
             <div class="input-group-prepend">
@@ -92,7 +92,7 @@
             <input type="text" class="form-control text-right" id="imv_cupo">
           </div>
         </div>
-        <div class="col-md-3 mb-3">
+        <div class="col-md-3 mb-3" style="display: none">
           <label for="tot_cupo">Total</label>
           <div class="input-group">
             <div class="input-group-prepend">
